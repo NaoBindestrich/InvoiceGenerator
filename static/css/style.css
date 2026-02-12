@@ -638,8 +638,12 @@ footer p:hover {
     color: var(--primary-color);
 }
 
-/* Responsive */
+/* Responsive Design - Mobile Optimized */
 @media (max-width: 768px) {
+    .container {
+        padding: 20px 16px;
+    }
+
     h1 {
         font-size: 40px;
     }
@@ -649,15 +653,113 @@ footer p:hover {
     }
 
     .card {
-        padding: 24px;
+        padding: 24px 20px;
+        margin-bottom: 20px;
+    }
+
+    .card-title {
+        font-size: 22px;
     }
 
     .item-row {
         grid-template-columns: 1fr;
+        gap: 12px;
     }
 
     .form-row {
         grid-template-columns: 1fr;
+    }
+
+    /* Better touch targets for mobile */
+    input, select, textarea {
+        min-height: 48px;
+        font-size: 16px; /* Prevents iOS zoom on focus */
+    }
+
+    .btn {
+        min-height: 48px;
+        font-size: 17px;
+        padding: 12px 24px;
+    }
+
+    /* Header adjustments */
+    header {
+        margin-bottom: 40px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .header-content > div {
+        width: 100%;
+    }
+
+    /* Items table mobile view */
+    .items-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Smaller buttons on mobile */
+    .remove-item-btn {
+        padding: 8px 12px;
+        min-width: auto;
+        min-height: 40px;
+    }
+
+    /* Button group stacking */
+    .button-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .button-group .btn {
+        width: 100%;
+    }
+
+    /* Alert positioning */
+    .alert {
+        margin: 0 -16px 20px -16px;
+        border-radius: 0;
+    }
+
+    /* Success card mobile */
+    .success-card {
+        padding: 40px 24px;
+    }
+
+    .success-card h2 {
+        font-size: 28px;
+    }
+}
+
+/* Small phones (iPhone SE, etc.) */
+@media (max-width: 375px) {
+    h1 {
+        font-size: 32px;
+    }
+
+    .card {
+        padding: 20px 16px;
+    }
+
+    .btn {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+/* Tablets landscape */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        max-width: 720px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
