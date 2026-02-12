@@ -638,14 +638,29 @@ footer p:hover {
     color: var(--primary-color);
 }
 
-/* Responsive Design - Mobile Optimized */
-@media (max-width: 768px) {
+/* Responsive */
+
+/* Tablets and smaller desktops */
+@media (max-width: 1024px) {
     .container {
-        padding: 20px 16px;
+        max-width: 100%;
+        padding: 32px 16px;
     }
 
     h1 {
+        font-size: 48px;
+    }
+
+    .card {
+        padding: 32px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    h1 {
         font-size: 40px;
+        letter-spacing: -0.01em;
     }
 
     .subtitle {
@@ -653,113 +668,388 @@ footer p:hover {
     }
 
     .card {
-        padding: 24px 20px;
+        padding: 24px;
         margin-bottom: 20px;
     }
 
     .card-title {
-        font-size: 22px;
-    }
-
-    .item-row {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        font-size: 24px;
+        margin-bottom: 20px;
     }
 
     .form-row {
         grid-template-columns: 1fr;
     }
 
-    /* Better touch targets for mobile */
-    input, select, textarea {
-        min-height: 48px;
-        font-size: 16px; /* Prevents iOS zoom on focus */
-    }
-
-    .btn {
-        min-height: 48px;
-        font-size: 17px;
-        padding: 12px 24px;
-    }
-
-    /* Header adjustments */
-    header {
-        margin-bottom: 40px;
+    .item-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px;
     }
 
     .header-content {
         flex-direction: column;
         gap: 20px;
-        text-align: center;
     }
 
     .header-content > div {
         width: 100%;
     }
 
-    /* Items table mobile view */
-    .items-table {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+    .header-content .btn-secondary {
+        width: auto;
+        align-self: center;
     }
 
-    /* Smaller buttons on mobile */
-    .remove-item-btn {
-        padding: 8px 12px;
-        min-width: auto;
-        min-height: 40px;
-    }
-
-    /* Button group stacking */
     .button-group {
         flex-direction: column;
-        gap: 12px;
+        width: 100%;
     }
 
     .button-group .btn {
         width: 100%;
     }
 
-    /* Alert positioning */
-    .alert {
-        margin: 0 -16px 20px -16px;
-        border-radius: 0;
+    /* Make download buttons stack */
+    .download-section .button-group {
+        flex-direction: column;
     }
 
-    /* Success card mobile */
+    footer {
+        margin-top: 60px;
+        padding: 32px 16px;
+    }
+}
+
+/* Mobile phones (landscape and portrait) */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 20px 12px;
+    }
+
+    /* Header adjustments */
+    header {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 32px;
+        letter-spacing: -0.01em;
+        margin-bottom: 12px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    /* Header button */
+    .header-content {
+        gap: 16px;
+    }
+
+    .header-content .btn-secondary {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    /* Card styling */
+    .card {
+        padding: 20px;
+        border-radius: 16px;
+        margin-bottom: 16px;
+    }
+
+    .card-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+    }
+
+    .card-title::after {
+        width: 40px;
+        height: 2px;
+    }
+
+    .card:hover .card-title::after {
+        width: 60px;
+    }
+
+    /* Form elements */
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    label {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select,
+    textarea {
+        padding: 10px 12px;
+        font-size: 16px; /* Prevents iOS zoom on focus */
+        border-radius: 10px;
+    }
+
+    small {
+        font-size: 11px;
+    }
+
+    /* Form rows */
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    /* Items section */
+    .item-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .item-row .form-group {
+        margin-bottom: 8px;
+    }
+
+    /* Buttons */
+    button {
+        font-size: 15px;
+        padding: 12px 20px;
+        border-radius: 10px;
+    }
+
+    .btn-primary {
+        padding: 14px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .btn-secondary {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    .btn-text {
+        font-size: 16px;
+    }
+
+    .remove-item-btn {
+        padding: 10px 16px;
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .add-item-btn {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    /* Button groups */
+    .button-group {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .button-group .btn {
+        width: 100%;
+    }
+
+    /* Alert messages */
+    .alert {
+        font-size: 14px;
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+    }
+
+    /* Download section */
+    .download-section {
+        padding: 32px 20px;
+    }
+
+    .download-title {
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+
+    .download-subtitle {
+        font-size: 15px;
+        margin-bottom: 24px;
+    }
+
+    /* Success card */
     .success-card {
-        padding: 40px 24px;
+        padding: 40px 20px;
     }
 
     .success-card h2 {
         font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .success-card p {
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+
+    /* Back link */
+    .back-link {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    /* Footer */
+    footer {
+        margin-top: 40px;
+        padding: 24px 12px;
+        font-size: 13px;
     }
 }
 
-/* Small phones (iPhone SE, etc.) */
+/* Small mobile phones */
 @media (max-width: 375px) {
     h1 {
-        font-size: 32px;
+        font-size: 28px;
+    }
+
+    .subtitle {
+        font-size: 15px;
     }
 
     .card {
-        padding: 20px 16px;
+        padding: 16px;
     }
 
-    .btn {
+    .card-title {
+        font-size: 18px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select,
+    textarea {
+        padding: 10px;
         font-size: 16px;
-        padding: 10px 20px;
+    }
+
+    .btn-primary {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .download-title {
+        font-size: 22px;
+    }
+
+    .success-card h2 {
+        font-size: 24px;
     }
 }
 
-/* Tablets landscape */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .container {
-        max-width: 720px;
+/* Landscape orientation adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+    header {
+        margin-bottom: 20px;
     }
 
-    .form-row {
-        grid-template-columns: 1fr 1fr;
+    h1 {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .card {
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+
+    footer {
+        margin-top: 20px;
+        padding: 16px;
+    }
+}
+
+/* Touch device optimization */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase tap targets for touch */
+    button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select {
+        min-height: 44px;
+    }
+
+    /* Disable hover effects on touch devices */
+    .card:hover {
+        transform: none;
+        box-shadow: var(--shadow);
+    }
+
+    .item-row:hover {
+        transform: none;
+        background: var(--surface);
+    }
+
+    label:hover {
+        color: var(--text-primary);
+    }
+
+    .btn-primary:hover {
+        transform: none;
+    }
+
+    /* Remove animations that might cause performance issues */
+    * {
+        animation-duration: 0.2s !important;
+    }
+}
+
+/* High DPI displays (Retina) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Smoother rendering on high DPI displays */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    body::before {
+        animation: none;
     }
 }
 
