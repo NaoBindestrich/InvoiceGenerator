@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: invoice-generator
+    env: python
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.6
+      - key: PORT
+        value: 10000
+    disk:
+      name: invoice-data
+      mountPath: /opt/render/project/src/generated_invoices
+      sizeGB: 1

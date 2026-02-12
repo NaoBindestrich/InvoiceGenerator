@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Settings - Invoice Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Company Settings</h1>
+            <p class="subtitle">Configure your business information</p>
+            <a href="/" class="back-link">← Back to Invoice Generator</a>
+        </header>
+
+        <!-- Alert Messages -->
+        <div id="alert" class="alert"></div>
+
+        <!-- Settings Form -->
+        <div id="settingsSection">
+            <form id="settingsForm">
+                <!-- Basic Information -->
+                <div class="card">
+                    <h2 class="card-title">Basic Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="company_name">Company Name *</label>
+                        <input type="text" id="company_name" name="name" required 
+                               placeholder="Your Company Ltd">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address_line">Address Line *</label>
+                        <input type="text" id="address_line" name="address_line" required 
+                               placeholder="123 Business Street, 1010 Vienna, Austria">
+                        <small>Full address in one line (used in sender information)</small>
+                    </div>
+                </div>
+
+                <!-- Tax & Registration -->
+                <div class="card">
+                    <h2 class="card-title">Tax & Registration</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="uid">Tax ID (UID) *</label>
+                            <input type="text" id="uid" name="uid" required 
+                                   placeholder="ATU12345678">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vat_id">VAT ID (USt-IdNr)</label>
+                            <input type="text" id="vat_id" name="vat_id" 
+                                   placeholder="DE123456789">
+                            <small>Required for EU B2B invoicing</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="company_registration">Company Registration</label>
+                            <input type="text" id="company_registration" name="company_registration" 
+                                   placeholder="HRB 12345">
+                            <small>Trade register number</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="court">Registration Court *</label>
+                            <input type="text" id="court" name="court" required 
+                                   placeholder="Amtsgericht München">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="control">Additional Business Info</label>
+                        <input type="text" id="control" name="control" 
+                               placeholder="Managing Director: John Doe">
+                        <small>Optional additional information for footer</small>
+                    </div>
+                </div>
+
+                <!-- Banking Information -->
+                <div class="card">
+                    <h2 class="card-title">Banking Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="bank">Bank Name *</label>
+                        <input type="text" id="bank" name="bank" required 
+                               placeholder="Deutsche Bank">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="iban">IBAN *</label>
+                            <input type="text" id="iban" name="iban" required 
+                                   placeholder="DE89 3704 0044 0532 0130 00">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bic">BIC / SWIFT Code</label>
+                            <input type="text" id="bic" name="bic" 
+                                   placeholder="BYLADEM1001">
+                            <small>Required for international transfers</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Save Settings</span>
+                    </button>
+                    <a href="/" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Message -->
+        <div id="successSection" style="display: none;">
+            <div class="card success-card">
+                <h2>✓ Settings Saved Successfully</h2>
+                <p>Your company information has been updated.</p>
+                <a href="/" class="btn btn-primary">Go to Invoice Generator</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+</body>
+</html>
