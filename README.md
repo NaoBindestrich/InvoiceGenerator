@@ -36,12 +36,12 @@ python app.py
 
 ## 📖 Documentation
 
-- **[DEPLOY.md](DEPLOY.md)** - 5-minute Render.com deployment guide
-- **[HOSTING_GUIDE.md](HOSTING_GUIDE.md)** - All hosting platforms compared
+- **[guides/DEPLOY.md](guides/DEPLOY.md)** - 5-minute Render.com deployment guide
+- **[guides/HOSTING_GUIDE.md](guides/HOSTING_GUIDE.md)** - All hosting platforms compared
 - **[SEO_GUIDE.md](SEO_GUIDE.md)** - Complete SEO & Google visibility strategy
 - **[SEO_CHECKLIST.md](SEO_CHECKLIST.md)** - Quick SEO implementation checklist
-- **[EN16931_COMPLIANCE.md](EN16931_COMPLIANCE.md)** - EU eInvoicing standard guide
-- **[SETUP_GUIDE.md](SETUP_GUIDE.md)** - Detailed setup walkthrough
+- **[guides/EN16931_COMPLIANCE.md](guides/EN16931_COMPLIANCE.md)** - EU eInvoicing standard guide
+- **[guides/SETUP_GUIDE.md](guides/SETUP_GUIDE.md)** - Detailed setup walkthrough
 
 ## 🎯 Use Cases
 
