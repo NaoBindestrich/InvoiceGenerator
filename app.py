@@ -79,6 +79,20 @@ def settings():
     return render_template('settings.html')
 
 
+@app.route('/robots.txt')
+def robots():
+    """Serve robots.txt for SEO"""
+    return render_template('robots.txt'), 200, {'Content-Type': 'text/plain'}
+
+
+@app.route('/sitemap.xml')
+def sitemap():
+    """Generate sitemap.xml for SEO"""
+    from datetime import datetime
+    last_modified = datetime.now().strftime('%Y-%m-%d')
+    return render_template('sitemap.xml', last_modified=last_modified), 200, {'Content-Type': 'application/xml'}
+
+
 @app.route('/api/company-settings', methods=['GET'])
 def get_company_settings():
     """Get current company settings"""

@@ -14,7 +14,8 @@ A beautiful, modern web application for generating professional invoices with an
 - 💰 **Smart VAT** - Automatic tax calculations
 - 🌍 **Multi-country** - Support for all EU countries
 - ✅ **EN 16931 Compliant** - EU eInvoicing standard ready
-- 🚀 **Fast Setup** - Running in 3 minutes
+- � **SEO Optimized** - Ready for Google search visibility
+- �🚀 **Fast Setup** - Running in 3 minutes
 
 ## 🚀 Quick Start
 
@@ -35,12 +36,12 @@ python app.py
 
 ## 📖 Documentation
 
-See [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed instructions including:
-- Complete setup walkthrough
-- Customization options
-- Deployment guides
-- Monetization strategies
-- Security best practices
+- **[DEPLOY.md](DEPLOY.md)** - 5-minute Render.com deployment guide
+- **[HOSTING_GUIDE.md](HOSTING_GUIDE.md)** - All hosting platforms compared
+- **[SEO_GUIDE.md](SEO_GUIDE.md)** - Complete SEO & Google visibility strategy
+- **[SEO_CHECKLIST.md](SEO_CHECKLIST.md)** - Quick SEO implementation checklist
+- **[EN16931_COMPLIANCE.md](EN16931_COMPLIANCE.md)** - EU eInvoicing standard guide
+- **[SETUP_GUIDE.md](SETUP_GUIDE.md)** - Detailed setup walkthrough
 
 ## 🎯 Use Cases
 

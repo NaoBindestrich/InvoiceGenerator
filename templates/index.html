@@ -2,12 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#007AFF">
-    <title>Invoice Generator - Create Professional Invoices</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Free Invoice Generator - Create Professional Invoices Online | EN 16931 Compliant</title>
+    <meta name="title" content="Free Invoice Generator - Create Professional Invoices Online">
+    <meta name="description" content="Generate professional invoices instantly with our free online invoice generator. EN 16931 compliant, VAT calculation, PDF export, perfect for freelancers and small businesses.">
+    <meta name="keywords" content="invoice generator, free invoice, online invoice, professional invoice, PDF invoice, VAT invoice, EU invoice, EN 16931, business invoice, freelance invoice">
+    <meta name="author" content="Invoice Generator">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.url }}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="Free Invoice Generator - Create Professional Invoices Online">
+    <meta property="og:description" content="Generate professional invoices instantly with our free online invoice generator. EN 16931 compliant, VAT calculation, PDF export.">
+    <meta property="og:image" content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.url }}">
+    <meta property="twitter:title" content="Free Invoice Generator - Create Professional Invoices">
+    <meta property="twitter:description" content="Generate professional invoices instantly. EN 16931 compliant, VAT calculation, PDF export.">
+    <meta property="twitter:image" content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Invoice Generator",
+      "description": "Free online invoice generator for creating professional EN 16931 compliant invoices",
+      "url": "{{ request.url_root }}",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": "Professional PDF invoices, VAT calculation, EN 16931 compliant, Multi-currency support, Free to use"
+    }
+    </script>
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /settings
+Disallow: /api/
+Disallow: /download/
+
+# Sitemap
+Sitemap: {{ request.url_root }}sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
