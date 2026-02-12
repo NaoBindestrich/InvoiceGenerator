@@ -70,7 +70,10 @@ def calculate_due_date(invoice_date: datetime, payment_terms: str) -> str:
 @app.route('/')
 def index():
     """Main page - invoice form"""
-    return render_template('index.html')
+    # Get Google verification code from environment variable
+    import os
+    google_verification = os.environ.get('GOOGLE_VERIFICATION', '')
+    return render_template('index.html', google_verification=google_verification)
 
 
 @app.route('/settings')
@@ -91,6 +94,17 @@ def sitemap():
     from datetime import datetime
     last_modified = datetime.now().strftime('%Y-%m-%d')
     return render_template('sitemap.xml', last_modified=last_modified), 200, {'Content-Type': 'application/xml'}
+
+
+@app.route('/google<path:filename>.html')
+def google_verification_file(filename):
+    """Serve Google Search Console verification file"""
+    # This handles URLs like /google1234567890abcdef.html
+    import os
+    verification_content = os.environ.get('GOOGLE_VERIFICATION_FILE', '')
+    if verification_content:
+        return verification_content, 200, {'Content-Type': 'text/html'}
+    return "Verification file not configured. See .env.template for setup.", 404
 
 
 @app.route('/api/company-settings', methods=['GET'])

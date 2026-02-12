@@ -13,6 +13,11 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ request.url }}">
     
+    <!-- Google Search Console Verification -->
+    {% if google_verification %}
+    <meta name="google-site-verification" content="{{ google_verification }}" />
+    {% endif %}
+    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.url }}">
