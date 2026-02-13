@@ -109,7 +109,7 @@ function addItem() {
         <div class="form-group">
             <label>&nbsp;</label>
             <button type="button" 
-                    class="btn-danger btn-small remove-item-btn" 
+                    class="btn btn-danger btn-small remove-item-btn" 
                     onclick="removeItem('item-${itemCount}')">
                 Remove
             </button>
