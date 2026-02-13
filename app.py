@@ -299,7 +299,7 @@ def generate_invoice():
         
         # Generate PDF with current company settings and selected language
         company_settings = load_company_settings()
-        language = data.get('language', 'de')  # Default to German
+        language = data.get('language', 'en')  # Default to English
         
         if language == 'en':
             generator = PDFInvoiceGeneratorEN(company_info=company_settings)
