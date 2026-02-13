@@ -298,7 +298,8 @@ def generate_invoice():
         
         # Generate PDF with current company settings
         company_settings = load_company_settings()
-        generator = PDFInvoiceGenerator(company_info=company_settings)
+        language = data.get('language', 'de')  # Get language from form, default to German
+        generator = PDFInvoiceGenerator(company_info=company_settings, language=language)
         
         # Create filename
         day = datetime.now().strftime("%d")
