@@ -737,3 +737,262 @@ footer p:hover {
     padding: 8px 12px;
     min-width: auto;
 }
+/* ============================================
+   LIQUID GLASS ADVANCED EFFECTS
+   ============================================ */
+
+/* Enhanced glass with depth and refraction simulation */
+.card,
+.item-row,
+button,
+input,
+select,
+textarea {
+    will-change: transform;
+    transform-style: preserve-3d;
+}
+
+/* Subtle shimmer animation on glass surfaces */
+@keyframes glassShimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.card::before {
+    background: linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 70%
+    );
+    background-size: 200% 100%;
+    animation: glassShimmer 8s ease-in-out infinite;
+}
+
+/* Enhanced depth layers */
+.card,
+.item-row {
+    position: relative;
+}
+
+.card::after,
+.item-row::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.3) 100%
+    );
+    border-radius: inherit;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(4px);
+}
+
+/* Frosted edge glow */
+button,
+input:focus,
+select:focus,
+textarea:focus {
+    position: relative;
+}
+
+button::after,
+input:focus::after,
+select:focus::after,
+textarea:focus::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        rgba(0, 122, 255, 0.6),
+        rgba(88, 86, 214, 0.6),
+        rgba(255, 45, 85, 0.6),
+        rgba(0, 122, 255, 0.6)
+    );
+    background-size: 300% 300%;
+    border-radius: inherit;
+    opacity: 0;
+    z-index: -1;
+    filter: blur(8px);
+    transition: opacity 0.3s ease;
+    animation: glowPulse 4s ease infinite;
+}
+
+button:hover::after {
+    opacity: 0.6;
+}
+
+input:focus::after,
+select:focus::after,
+textarea:focus::after {
+    opacity: 0.4;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Glass reflection effect */
+.btn-primary,
+.btn-success,
+.btn-danger {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before,
+.btn-success::before,
+.btn-danger::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 70%
+    );
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+}
+
+.btn-primary:hover::before,
+.btn-success:hover::before,
+.btn-danger:hover::before {
+    left: 100%;
+}
+
+/* Frosted glass texture overlay */
+.card,
+.item-row {
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+}
+
+/* Liquid morphing on hover */
+.card:hover {
+    animation: liquidMorph 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes liquidMorph {
+    0%, 100% {
+        border-radius: 24px;
+    }
+    25% {
+        border-radius: 28px 20px 24px 20px;
+    }
+    50% {
+        border-radius: 20px 28px 20px 24px;
+    }
+    75% {
+        border-radius: 24px 24px 28px 20px;
+    }
+}
+
+/* Enhanced input glass with micro-animations */
+input:hover,
+select:hover,
+textarea:hover {
+    animation: inputPulse 0.3s ease;
+}
+
+@keyframes inputPulse {
+    0%, 100% {
+        transform: translateY(-2px) scale(1);
+    }
+    50% {
+        transform: translateY(-3px) scale(1.002);
+    }
+}
+
+/* Chromatic aberration effect on buttons */
+button:active {
+    animation: chromaticPress 0.2s ease;
+}
+
+@keyframes chromaticPress {
+    0%, 100% {
+        filter: none;
+    }
+    50% {
+        filter: 
+            drop-shadow(2px 0 0 rgba(255, 0, 255, 0.3))
+            drop-shadow(-2px 0 0 rgba(0, 255, 255, 0.3));
+    }
+}
+
+/* Liquid loading state enhancement */
+.loading::after {
+    background: 
+        conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            var(--primary-color) 90deg,
+            transparent 180deg
+        );
+    border-radius: 50%;
+}
+
+/* Advanced frosted effect for alerts */
+.alert {
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Responsive glass intensity */
+@media (prefers-reduced-motion: reduce) {
+    .card::before,
+    button::before,
+    .card:hover {
+        animation: none;
+    }
+    
+    .card,
+    .item-row,
+    button,
+    input,
+    select,
+    textarea {
+        will-change: auto;
+    }
+}
+
+/* High performance mode - reduce blur on lower-end devices */
+@media (max-width: 768px) {
+    .card,
+    .item-row {
+        backdrop-filter: blur(15px) saturate(140%);
+        -webkit-backdrop-filter: blur(15px) saturate(140%);
+    }
+    
+    input,
+    select,
+    textarea {
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+}
