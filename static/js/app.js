@@ -172,6 +172,7 @@ document.getElementById('invoiceForm').addEventListener('submit', async function
             payment_terms: document.getElementById('payment_terms').value,
             payment_means: document.getElementById('payment_means').value,
             payment_reference: document.getElementById('payment_reference').value,
+            language: document.getElementById('language').value,
             items: []
         };
         
