@@ -240,7 +240,7 @@ h1 {
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.45),
                 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
-    transform: translateY(-6px) scale(1.01);
+    /* transform removed - handled by JavaScript for 3D rotation */
 }
 
 .card:hover::before {
@@ -377,7 +377,7 @@ textarea::placeholder {
 
 .item-row:hover {
     background: rgba(255, 255, 255, 0.6);
-    transform: translateX(6px) scale(1.01);
+    /* transform removed - handled by JavaScript for 3D rotation */
     box-shadow: 0 8px 24px rgba(31, 38, 135, 0.3);
     border-color: rgba(255, 255, 255, 0.4);
 }

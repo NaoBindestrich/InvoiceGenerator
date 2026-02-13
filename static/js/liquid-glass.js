@@ -102,18 +102,20 @@ class LiquidGlass {
         const percentX = (x - centerX) / centerX;
         const percentY = (y - centerY) / centerY;
         
-        // Subtle parallax movement
-        const moveX = percentX * 5;
-        const moveY = percentY * 5;
+        // Apply 3D rotation transform with smooth interpolation
+        const rotateX = (-percentY * 3).toFixed(2);
+        const rotateY = (percentX * 3).toFixed(2);
         
-        element.style.transform = `translateY(-6px) scale(1.01) perspective(1000px) rotateX(${-percentY * 2}deg) rotateY(${percentX * 2}deg)`;
+        element.style.transform = `translateY(-6px) scale(1.01) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        element.style.transition = 'transform 0.1s ease-out';
         
         // Update light position
         this.updateElementLight(element, x, y);
     }
 
     resetParallax(element) {
-        element.style.transform = '';
+        element.style.transform = 'translateY(0) scale(1) perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        element.style.transition = 'transform 0.3s ease';
         this.removeElementLight(element);
     }
 
