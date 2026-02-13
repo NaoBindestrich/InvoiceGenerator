@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="google-site-verification" content="jv36-tgAuqUnbNF5xxG7DrHbQjqY77ve52Ik07acHJY" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Manual Invoice Generator - Create Professional Invoices | Invoice Generator</title>
+    <meta name="title" content="Manual Invoice Generator - Create Professional Invoices">
+    <meta name="description" content="Generate professional invoices instantly with our free online invoice generator. EN 16931 compliant, VAT calculation, PDF export, perfect for freelancers and small businesses.">
+    <meta name="keywords" content="invoice generator, free invoice, online invoice, professional invoice, PDF invoice, VAT invoice, EU invoice, EN 16931, business invoice, freelance invoice">
+    <meta name="author" content="Invoice Generator">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.url }}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="Free Invoice Generator - Create Professional Invoices Online">
+    <meta property="og:description" content="Generate professional invoices instantly with our free online invoice generator. EN 16931 compliant, VAT calculation, PDF export.">
+    <meta property="og:image" content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.url }}">
+    <meta property="twitter:title" content="Free Invoice Generator - Create Professional Invoices">
+    <meta property="twitter:description" content="Generate professional invoices instantly. EN 16931 compliant, VAT calculation, PDF export.">
+    <meta property="twitter:image" content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Invoice Generator",
+      "description": "Free online invoice generator for creating professional EN 16931 compliant invoices",
+      "url": "{{ request.url_root }}",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": "Professional PDF invoices, VAT calculation, EN 16931 compliant, Multi-currency support, Free to use"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/vat-rates.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>Manual Invoice Generator</h1>
+                    <p class="subtitle">Create professional invoices in seconds</p>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <a href="/" class="btn btn-secondary">← Home</a>
+                    <a href="/settings" class="btn btn-secondary">⚙️ Settings</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Alert Messages -->
+        <div id="alert" class="alert"></div>
+
+        <!-- Main Form -->
+        <div id="formSection">
+            <form id="invoiceForm">
+                <!-- Customer Information -->
+                <div class="card">
+                    <h2 class="card-title">Customer Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="buyer_name">Customer Name *</label>
+                        <input type="text" id="buyer_name" name="buyer_name" required 
+                               placeholder="John Doe">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="buyer_street">Street Address</label>
+                            <input type="text" id="buyer_street" name="buyer_street" 
+                                   placeholder="123 Main Street">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="buyer_city">City</label>
+                            <input type="text" id="buyer_city" name="buyer_city" 
+                                   placeholder="Vienna">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="buyer_postal">Postal Code</label>
+                            <input type="text" id="buyer_postal" name="buyer_postal" 
+                                   placeholder="1150">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="buyer_country">Country *</label>
+                            <select id="buyer_country" name="buyer_country" required>
+                                <option value="">Select Country</option>
+                                <option value="AT">Austria</option>
+                                <option value="BE">Belgium</option>
+                                <option value="BG">Bulgaria</option>
+                                <option value="HR">Croatia</option>
+                                <option value="CY">Cyprus</option>
+                                <option value="CZ">Czech Republic</option>
+                                <option value="DK">Denmark</option>
+                                <option value="EE">Estonia</option>
+                                <option value="FI">Finland</option>
+                                <option value="FR">France</option>
+                                <option value="DE">Germany</option>
+                                <option value="GR">Greece</option>
+                                <option value="HU">Hungary</option>
+                                <option value="IE">Ireland</option>
+                                <option value="IT">Italy</option>
+                                <option value="LV">Latvia</option>
+                                <option value="LT">Lithuania</option>
+                                <option value="LU">Luxembourg</option>
+                                <option value="MT">Malta</option>
+                                <option value="NL">Netherlands</option>
+                                <option value="PL">Poland</option>
+                                <option value="PT">Portugal</option>
+                                <option value="RO">Romania</option>
+                                <option value="SK">Slovakia</option>
+                                <option value="SI">Slovenia</option>
+                                <option value="ES">Spain</option>
+                                <option value="SE">Sweden</option>
+                                <option value="CH">Switzerland</option>
+                                <option value="GB">United Kingdom</option>
+                                <option value="NO">Norway</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="buyer_vat_id">Customer VAT ID (EN 16931 Required)</label>
+                        <input type="text" id="buyer_vat_id" name="buyer_vat_id" 
+                               placeholder="e.g., DE123456789, BE0123456789">
+                    </div>
+                </div>
+
+                <!-- Invoice Items -->
+                <div class="card">
+                    <h2 class="card-title">Invoice Items</h2>
+                    
+                    <div id="itemsContainer" class="items-container">
+                        <!-- Items will be added dynamically -->
+                    </div>
+
+                    <button type="button" class="add-item-btn" onclick="addItem()">
+                        <span>+</span> Add Item
+                    </button>
+                </div>
+
+                <!-- Invoice Settings -->
+                <div class="card">
+                    <h2 class="card-title">Invoice Settings</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vat_rate_type">VAT Rate Type</label>
+                            <select id="vat_rate_type" name="vat_rate_type">
+                                <option value="standard" selected>Standard Rate</option>
+                                <option value="reduced">Reduced Rate</option>
+                            </select>
+                            <small id="vat_rate_display" style="display: block; margin-top: 8px; color: #86868B;">
+                                Select a country to see VAT rate
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shipping_total">Shipping Cost (€)</label>
+                            <input type="number" id="shipping_total" name="shipping_total" 
+                                   step="0.01" min="0" value="0" placeholder="0.00">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="currency">Currency</label>
+                            <select id="currency" name="currency">
+                                <option value="€" selected>Euro (€)</option>
+                                <option value="$">US Dollar ($)</option>
+                                <option value="£">British Pound (£)</option>
+                                <option value="kr">Swedish Krona (kr)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shipping_service">Shipping Service</label>
+                            <input type="text" id="shipping_service" name="shipping_service" 
+                                   value="Standard" placeholder="Standard">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Information (EN 16931) -->
+                <div class="card">
+                    <h2 class="card-title">Payment Information</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="payment_terms">Payment Terms</label>
+                            <select id="payment_terms" name="payment_terms">
+                                <option value="Net 7">Due in 7 days</option>
+                                <option value="Net 14">Due in 14 days</option>
+                                <option value="Net 30" selected>Due in 30 days (Net 30)</option>
+                                <option value="Net 60">Due in 60 days (Net 60)</option>
+                                <option value="Net 90">Due in 90 days (Net 90)</option>
+                                <option value="Immediate">Immediate payment</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="payment_means">Payment Method</label>
+                            <select id="payment_means" name="payment_means">
+                                <option value="Credit transfer" selected>Bank Transfer</option>
+                                <option value="Credit card">Credit Card</option>
+                                <option value="Direct debit">Direct Debit</option>
+                                <option value="Cash">Cash</option>
+                                <option value="PayPal">PayPal</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="payment_reference">Payment Reference / Message</label>
+                        <input type="text" id="payment_reference" name="payment_reference" 
+                               placeholder="e.g., Invoice INV-2026-00045">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">
+                    Generate Invoice
+                </button>
+            </form>
+        </div>
+
+        <!-- Download Section (Hidden by default) -->
+        <div id="downloadSection" class="card download-section">
+            <div class="success-icon">✓</div>
+            <h2 class="download-title">Invoice Generated!</h2>
+            <p class="download-subtitle">Your invoice is ready to download</p>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="downloadInvoice()">
+                    Download PDF
+                </button>
+                <button class="btn btn-secondary" onclick="createAnother()">
+                    Create Another Invoice
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Invoice Generator. All rights reserved.</p>
+        <p><a href="/terms" style="color: inherit; text-decoration: none; opacity: 0.8;">Terms of Service</a> | <a href="/privacy" style="color: inherit; text-decoration: none; opacity: 0.8;">Privacy Policy</a></p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/liquid-glass.js') }}"></script>
+    
+    <!-- SVG Liquid Glass Refraction Filter -->
+    <svg style="position: absolute; width: 0; height: 0;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <filter id="liquid-distortion" x="-50%" y="-50%" width="200%" height="200%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" result="turbulence"/>
+                <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+        </defs>
+    </svg>
+</body>
+</html>

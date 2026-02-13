@@ -126,8 +126,20 @@ def calculate_due_date(invoice_date: datetime, payment_terms: str) -> str:
 
 @app.route('/')
 def index():
-    """Main page - invoice form"""
+    """Homepage - method selection"""
     return render_template('index.html')
+
+
+@app.route('/manual')
+def manual():
+    """Manual invoice generation form"""
+    return render_template('manual.html')
+
+
+@app.route('/automatic')
+def automatic():
+    """Automatic marketplace integration (coming soon)"""
+    return render_template('automatic.html')
 
 
 @app.route('/settings')

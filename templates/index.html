@@ -48,215 +48,108 @@
     </script>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/vat-rates.js') }}"></script>
 </head>
 <body>
     <div class="container">
         <!-- Header -->
         <header>
-            <div class="header-content">
-                <div>
+            <div class="header-content" style="flex-direction: column; align-items: center;">
+                <div style="text-align: center; width: 100%;">
                     <h1>Invoice Generator</h1>
-                    <p class="subtitle">Create professional invoices in seconds</p>
+                    <p class="subtitle">Professional invoicing made simple</p>
                 </div>
-                <a href="/settings" class="btn btn-secondary">⚙️ Company Settings</a>
             </div>
         </header>
 
-        <!-- Alert Messages -->
-        <div id="alert" class="alert"></div>
+        <!-- Hero Section -->
+        <div class="card" style="text-align: center; padding: 60px 40px;">
+            <h2 class="card-title" style="font-size: 32px; margin-bottom: 16px;">Choose Your Method</h2>
+            <p style="font-size: 19px; color: var(--text-secondary); margin-bottom: 48px;">
+                Generate invoices manually or automate with marketplace integrations
+            </p>
 
-        <!-- Main Form -->
-        <div id="formSection">
-            <form id="invoiceForm">
-                <!-- Customer Information -->
-                <div class="card">
-                    <h2 class="card-title">Customer Information</h2>
-                    
-                    <div class="form-group">
-                        <label for="buyer_name">Customer Name *</label>
-                        <input type="text" id="buyer_name" name="buyer_name" required 
-                               placeholder="John Doe">
+            <!-- Method Selection Cards -->
+            <div class="method-grid">
+                <!-- Manual Generation -->
+                <a href="/manual" class="method-card">
+                    <div class="method-icon">📝</div>
+                    <h3 class="method-title">Manual Generation</h3>
+                    <p class="method-description">
+                        Create invoices by filling out a form. Perfect for one-off invoices and custom billing.
+                    </p>
+                    <ul class="method-features">
+                        <li>✓ Custom invoice details</li>
+                        <li>✓ 29 EU countries VAT rates</li>
+                        <li>✓ EN 16931 compliant</li>
+                        <li>✓ Instant PDF download</li>
+                    </ul>
+                    <div class="method-button">
+                        Get Started →
                     </div>
+                </a>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="buyer_street">Street Address</label>
-                            <input type="text" id="buyer_street" name="buyer_street" 
-                                   placeholder="123 Main Street">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="buyer_city">City</label>
-                            <input type="text" id="buyer_city" name="buyer_city" 
-                                   placeholder="Vienna">
-                        </div>
+                <!-- Automatic Generation -->
+                <a href="/automatic" class="method-card">
+                    <div class="method-icon">🤖</div>
+                    <h3 class="method-title">Automatic Integration</h3>
+                    <p class="method-description">
+                        Connect your marketplace accounts for automatic invoice generation.
+                    </p>
+                    <ul class="method-features">
+                        <li>✓ Marketplace integrations</li>
+                        <li>✓ Automatic data import</li>
+                        <li>✓ Bulk generation</li>
+                        <li>✓ Coming soon...</li>
+                    </ul>
+                    <div class="method-button method-button-secondary">
+                        Coming Soon
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="buyer_postal">Postal Code</label>
-                            <input type="text" id="buyer_postal" name="buyer_postal" 
-                                   placeholder="1150">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="buyer_country">Country *</label>
-                            <select id="buyer_country" name="buyer_country" required>
-                                <option value="">Select Country</option>
-                                <option value="AT">Austria</option>
-                                <option value="BE">Belgium</option>
-                                <option value="BG">Bulgaria</option>
-                                <option value="HR">Croatia</option>
-                                <option value="CY">Cyprus</option>
-                                <option value="CZ">Czech Republic</option>
-                                <option value="DK">Denmark</option>
-                                <option value="EE">Estonia</option>
-                                <option value="FI">Finland</option>
-                                <option value="FR">France</option>
-                                <option value="DE">Germany</option>
-                                <option value="GR">Greece</option>
-                                <option value="HU">Hungary</option>
-                                <option value="IE">Ireland</option>
-                                <option value="IT">Italy</option>
-                                <option value="LV">Latvia</option>
-                                <option value="LT">Lithuania</option>
-                                <option value="LU">Luxembourg</option>
-                                <option value="MT">Malta</option>
-                                <option value="NL">Netherlands</option>
-                                <option value="PL">Poland</option>
-                                <option value="PT">Portugal</option>
-                                <option value="RO">Romania</option>
-                                <option value="SK">Slovakia</option>
-                                <option value="SI">Slovenia</option>
-                                <option value="ES">Spain</option>
-                                <option value="SE">Sweden</option>
-                                <option value="CH">Switzerland</option>
-                                <option value="GB">United Kingdom</option>
-                                <option value="NO">Norway</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="buyer_vat_id">Customer VAT ID (EN 16931 Required)</label>
-                        <input type="text" id="buyer_vat_id" name="buyer_vat_id" 
-                               placeholder="e.g., DE123456789, BE0123456789">
-                    </div>
-                </div>
-
-                <!-- Invoice Items -->
-                <div class="card">
-                    <h2 class="card-title">Invoice Items</h2>
-                    
-                    <div id="itemsContainer" class="items-container">
-                        <!-- Items will be added dynamically -->
-                    </div>
-
-                    <button type="button" class="add-item-btn" onclick="addItem()">
-                        <span>+</span> Add Item
-                    </button>
-                </div>
-
-                <!-- Invoice Settings -->
-                <div class="card">
-                    <h2 class="card-title">Invoice Settings</h2>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="vat_rate_type">VAT Rate Type</label>
-                            <select id="vat_rate_type" name="vat_rate_type">
-                                <option value="standard" selected>Standard Rate</option>
-                                <option value="reduced">Reduced Rate</option>
-                            </select>
-                            <small id="vat_rate_display" style="display: block; margin-top: 8px; color: #86868B;">
-                                Select a country to see VAT rate
-                            </small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="shipping_total">Shipping Cost (€)</label>
-                            <input type="number" id="shipping_total" name="shipping_total" 
-                                   step="0.01" min="0" value="0" placeholder="0.00">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="currency">Currency</label>
-                            <select id="currency" name="currency">
-                                <option value="€" selected>Euro (€)</option>
-                                <option value="$">US Dollar ($)</option>
-                                <option value="£">British Pound (£)</option>
-                                <option value="kr">Swedish Krona (kr)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="shipping_service">Shipping Service</label>
-                            <input type="text" id="shipping_service" name="shipping_service" 
-                                   value="Standard" placeholder="Standard">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Payment Information (EN 16931) -->
-                <div class="card">
-                    <h2 class="card-title">Payment Information</h2>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="payment_terms">Payment Terms</label>
-                            <select id="payment_terms" name="payment_terms">
-                                <option value="Net 7">Due in 7 days</option>
-                                <option value="Net 14">Due in 14 days</option>
-                                <option value="Net 30" selected>Due in 30 days (Net 30)</option>
-                                <option value="Net 60">Due in 60 days (Net 60)</option>
-                                <option value="Net 90">Due in 90 days (Net 90)</option>
-                                <option value="Immediate">Immediate payment</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="payment_means">Payment Method</label>
-                            <select id="payment_means" name="payment_means">
-                                <option value="Credit transfer" selected>Bank Transfer</option>
-                                <option value="Credit card">Credit Card</option>
-                                <option value="Direct debit">Direct Debit</option>
-                                <option value="Cash">Cash</option>
-                                <option value="PayPal">PayPal</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="payment_reference">Payment Reference / Message</label>
-                        <input type="text" id="payment_reference" name="payment_reference" 
-                               placeholder="e.g., Invoice INV-2026-00045">
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary">
-                    Generate Invoice
-                </button>
-            </form>
+                </a>
+            </div>
         </div>
 
-        <!-- Download Section (Hidden by default) -->
-        <div id="downloadSection" class="card download-section">
-            <div class="success-icon">✓</div>
-            <h2 class="download-title">Invoice Generated!</h2>
-            <p class="download-subtitle">Your invoice is ready to download</p>
-            
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="downloadInvoice()">
-                    Download PDF
-                </button>
-                <button class="btn btn-secondary" onclick="createAnother()">
-                    Create Another Invoice
-                </button>
+        <!-- Features Overview -->
+        <div class="card">
+            <h2 class="card-title">Why Choose Our Invoice Generator?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Beautiful Design</h3>
+                    <p>Professional invoices with Apple-inspired Liquid Glass design</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Generate invoices in seconds with instant PDF download</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Private</h3>
+                    <p>Your data is protected. GDPR compliant with privacy-first approach</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <h3>EU Compliant</h3>
+                    <p>EN 16931 certified for all EU countries with automatic VAT calculation</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <h3>100% Free</h3>
+                    <p>No hidden fees, no subscriptions. Completely free to use</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Customizable</h3>
+                    <p>Configure your company details once, reuse for all invoices</p>
+                </div>
             </div>
+        </div>
+
+        <!-- Settings Link -->
+        <div style="text-align: center; margin-top: 32px;">
+            <a href="/settings" class="btn btn-secondary" style="display: inline-block; padding: 16px 32px;">
+                ⚙️ Configure Company Settings
+            </a>
         </div>
     </div>
 
@@ -266,7 +159,6 @@
         <p><a href="/terms" style="color: inherit; text-decoration: none; opacity: 0.8;">Terms of Service</a> | <a href="/privacy" style="color: inherit; text-decoration: none; opacity: 0.8;">Privacy Policy</a></p>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/liquid-glass.js') }}"></script>
     
     <!-- SVG Liquid Glass Refraction Filter -->

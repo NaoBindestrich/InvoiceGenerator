@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Integration - Coming Soon | Invoice Generator</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content" style="flex-direction: column; align-items: center;">
+                <div style="text-align: center; width: 100%;">
+                    <h1>Automatic Integration</h1>
+                    <a href="/" class="back-link">← Back to Home</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="card" style="text-align: center; padding: 80px 40px;">
+            <div class="success-icon" style="width: 120px; height: 120px; font-size: 60px; margin: 0 auto 32px; background: rgba(88, 86, 214, 0.2); border-color: rgba(88, 86, 214, 0.4); animation: none;">
+                🤖
+            </div>
+            
+            <h2 class="card-title" style="font-size: 36px; margin-bottom: 24px;">
+                Coming Soon!
+            </h2>
+            
+            <p style="font-size: 21px; color: var(--text-secondary); margin-bottom: 48px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                We're building powerful marketplace integrations to automate your invoice generation.
+            </p>
+
+            <div class="card" style="max-width: 700px; margin: 0 auto 48px; text-align: left;">
+                <h3 class="card-title" style="font-size: 24px; margin-bottom: 24px;">
+                    Planned Integrations
+                </h3>
+                
+                <div class="integration-list">
+                    <div class="integration-item">
+                        <div class="integration-icon">🛒</div>
+                        <div>
+                            <h4>E-Commerce Platforms</h4>
+                            <p>Shopify, WooCommerce, Magento</p>
+                        </div>
+                    </div>
+
+                    <div class="integration-item">
+                        <div class="integration-icon">📦</div>
+                        <div>
+                            <h4>Marketplaces</h4>
+                            <p>Amazon, eBay, Etsy</p>
+                        </div>
+                    </div>
+
+                    <div class="integration-item">
+                        <div class="integration-icon">💳</div>
+                        <div>
+                            <h4>Payment Processors</h4>
+                            <p>Stripe, PayPal, Square</p>
+                        </div>
+                    </div>
+
+                    <div class="integration-item">
+                        <div class="integration-icon">📊</div>
+                        <div>
+                            <h4>Accounting Software</h4>
+                            <p>QuickBooks, Xero, Sage</p>
+                        </div>
+                    </div>
+
+                    <div class="integration-item">
+                        <div class="integration-icon">🔗</div>
+                        <div>
+                            <h4>API Access</h4>
+                            <p>RESTful API for custom integrations</p>
+                        </div>
+                    </div>
+
+                    <div class="integration-item">
+                        <div class="integration-icon">📧</div>
+                        <div>
+                            <h4>Email Integration</h4>
+                            <p>Automatic invoice delivery to customers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 32px;">
+                <h3 style="font-size: 24px; margin-bottom: 16px; color: var(--text-primary);">
+                    In the Meantime...
+                </h3>
+                <p style="font-size: 17px; color: var(--text-secondary);">
+                    Try our Manual Invoice Generator for quick, professional invoices
+                </p>
+            </div>
+
+            <div class="button-group">
+                <a href="/manual" class="btn btn-primary" style="display: inline-block; padding: 16px 32px;">
+                    Try Manual Generation
+                </a>
+                <a href="/" class="btn btn-secondary" style="display: inline-block; padding: 16px 32px;">
+                    Back to Home
+                </a>
+            </div>
+        </div>
+
+        <!-- Notification Signup -->
+        <div class="card">
+            <h2 class="card-title">Get Notified</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">
+                Want to be the first to know when automatic integrations launch? Contact us at:
+            </p>
+            <p style="font-size: 19px; font-weight: 600; color: var(--primary-color);">
+                <a href="mailto:landsberg.umar@tasnim.at" style="color: inherit;">landsberg.umar@tasnim.at</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Invoice Generator. All rights reserved.</p>
+        <p><a href="/terms" style="color: inherit; text-decoration: none; opacity: 0.8;">Terms of Service</a> | <a href="/privacy" style="color: inherit; text-decoration: none; opacity: 0.8;">Privacy Policy</a></p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/liquid-glass.js') }}"></script>
+    
+    <!-- SVG Liquid Glass Refraction Filter -->
+    <svg style="position: absolute; width: 0; height: 0;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <filter id="liquid-distortion" x="-50%" y="-50%" width="200%" height="200%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" result="turbulence"/>
+                <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+        </defs>
+    </svg>
+</body>
+</html>
