@@ -351,6 +351,18 @@ def preview_invoice(filename):
         return jsonify({'error': str(e)}), 500
 
 
+@app.route('/terms')
+def terms():
+    """Terms of Service page"""
+    return render_template('terms.html')
+
+
+@app.route('/privacy')
+def privacy():
+    """Privacy Policy page"""
+    return render_template('privacy.html')
+
+
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5001))

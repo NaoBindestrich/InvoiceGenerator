@@ -8,11 +8,14 @@ A beautiful, modern web application for generating professional invoices with an
 
 ## ✨ Features
 
-- 🎨 **Beautiful UI** - Clean, Apple-inspired design
+- 🎨 **Beautiful UI** - Clean, Apple-inspired design with Liquid Glass effects
 - ⚙️ **Web Settings** - Configure company info directly in the browser
 - 📄 **Professional PDFs** - Generate invoices instantly
-- 💰 **Smart VAT** - Automatic tax calculations
-- 🌍 **Multi-country** - Support for all EU countries
+- 💰 **Smart VAT** - Automatic tax calculations for 29 EU countries
+- 🌍 **Multi-country** - Support for all EU countries with standard/reduced VAT rates
+- 📜 **EN 16931 Compliant** - Meets EU electronic invoicing standards
+- 🔒 **Legal Protection** - MIT License, Terms of Service, Privacy Policy included
+- 🌐 **SEO Optimized** - Google Search Console verified
 - ✅ **EN 16931 Compliant** - EU eInvoicing standard ready
 - � **SEO Optimized** - Ready for Google search visibility
 - �🚀 **Fast Setup** - Running in 3 minutes

@@ -431,6 +431,12 @@ class PDFInvoiceGenerator:
                 text_obj.textLine(f"Geschäftsführung: {self.company_info['ceo']}")
             c.drawText(text_obj)
             
+            # Copyright notice at bottom
+            copyright_y = 20
+            c.setFont(self.FONT_NORMAL, 7)
+            c.setFillColor(colors.grey)
+            c.drawCentredString(297.64, copyright_y, "© 2026 Invoice Generator. All rights reserved.")
+            
             c.showPage()
             c.save()
             return True
