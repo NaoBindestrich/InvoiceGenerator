@@ -25,6 +25,63 @@ INVOICE_DIR.mkdir(exist_ok=True)
 # Company settings file
 SETTINGS_FILE = Path("company_config.json")
 
+# EU VAT Rates Database
+# Contains standard and reduced VAT rates for all EU countries
+VAT_RATES = {
+    'AT': {'name': 'Austria', 'standard': 0.20, 'reduced': 0.10},
+    'BE': {'name': 'Belgium', 'standard': 0.21, 'reduced': 0.06},
+    'BG': {'name': 'Bulgaria', 'standard': 0.20, 'reduced': 0.09},
+    'HR': {'name': 'Croatia', 'standard': 0.25, 'reduced': 0.05},
+    'CY': {'name': 'Cyprus', 'standard': 0.19, 'reduced': 0.05},
+    'CZ': {'name': 'Czech Republic', 'standard': 0.21, 'reduced': 0.12},
+    'DK': {'name': 'Denmark', 'standard': 0.25, 'reduced': 0.25},  # No reduced rate
+    'EE': {'name': 'Estonia', 'standard': 0.24, 'reduced': 0.09},
+    'FI': {'name': 'Finland', 'standard': 0.255, 'reduced': 0.10},
+    'FR': {'name': 'France', 'standard': 0.20, 'reduced': 0.055},
+    'DE': {'name': 'Germany', 'standard': 0.19, 'reduced': 0.07},
+    'GR': {'name': 'Greece', 'standard': 0.24, 'reduced': 0.06},
+    'HU': {'name': 'Hungary', 'standard': 0.27, 'reduced': 0.05},
+    'IE': {'name': 'Ireland', 'standard': 0.23, 'reduced': 0.048},
+    'IT': {'name': 'Italy', 'standard': 0.22, 'reduced': 0.10},
+    'LV': {'name': 'Latvia', 'standard': 0.21, 'reduced': 0.05},
+    'LT': {'name': 'Lithuania', 'standard': 0.21, 'reduced': 0.05},
+    'LU': {'name': 'Luxembourg', 'standard': 0.17, 'reduced': 0.03},
+    'MT': {'name': 'Malta', 'standard': 0.18, 'reduced': 0.05},
+    'NL': {'name': 'Netherlands', 'standard': 0.21, 'reduced': 0.09},
+    'PL': {'name': 'Poland', 'standard': 0.23, 'reduced': 0.05},
+    'PT': {'name': 'Portugal', 'standard': 0.23, 'reduced': 0.06},
+    'RO': {'name': 'Romania', 'standard': 0.21, 'reduced': 0.11},
+    'SK': {'name': 'Slovakia', 'standard': 0.23, 'reduced': 0.05},
+    'SI': {'name': 'Slovenia', 'standard': 0.22, 'reduced': 0.05},
+    'ES': {'name': 'Spain', 'standard': 0.21, 'reduced': 0.10},
+    'SE': {'name': 'Sweden', 'standard': 0.25, 'reduced': 0.06},
+    # Non-EU European countries
+    'CH': {'name': 'Switzerland', 'standard': 0.077, 'reduced': 0.025},
+    'GB': {'name': 'United Kingdom', 'standard': 0.20, 'reduced': 0.05},
+    'NO': {'name': 'Norway', 'standard': 0.25, 'reduced': 0.12}
+}
+
+
+def get_vat_rate(country_code: str, rate_type: str = 'standard') -> float:
+    """
+    Get VAT rate for a country
+    
+    Args:
+        country_code: Two-letter country code (e.g., 'AT', 'DE')
+        rate_type: 'standard' or 'reduced'
+        
+    Returns:
+        VAT rate as decimal (e.g., 0.19 for 19%)
+    """
+    country_code = country_code.upper()
+    country = VAT_RATES.get(country_code)
+    
+    if not country:
+        print(f"Warning: VAT rate not found for country: {country_code}, using default 19%")
+        return 0.19  # Default fallback
+    
+    return country.get('reduced' if rate_type == 'reduced' else 'standard', 0.19)
+
 
 def load_company_settings():
     """Load company settings from JSON file or use defaults"""
@@ -70,10 +127,7 @@ def calculate_due_date(invoice_date: datetime, payment_terms: str) -> str:
 @app.route('/')
 def index():
     """Main page - invoice form"""
-    # Get Google verification code from environment variable
-    import os
-    google_verification = os.environ.get('GOOGLE_VERIFICATION', '')
-    return render_template('index.html', google_verification=google_verification)
+    return render_template('index.html')
 
 
 @app.route('/settings')
@@ -94,17 +148,6 @@ def sitemap():
     from datetime import datetime
     last_modified = datetime.now().strftime('%Y-%m-%d')
     return render_template('sitemap.xml', last_modified=last_modified), 200, {'Content-Type': 'application/xml'}
-
-
-@app.route('/google<path:filename>.html')
-def google_verification_file(filename):
-    """Serve Google Search Console verification file"""
-    # This handles URLs like /google1234567890abcdef.html
-    import os
-    verification_content = os.environ.get('GOOGLE_VERIFICATION_FILE', '')
-    if verification_content:
-        return verification_content, 200, {'Content-Type': 'text/html'}
-    return "Verification file not configured. See .env.template for setup.", 404
 
 
 @app.route('/api/company-settings', methods=['GET'])
@@ -188,7 +231,11 @@ def generate_invoice():
         # Calculate totals
         item_subtotal = sum(item.item_total for item in items)
         shipping_total = float(data.get('shipping_total', 0))
-        vat_rate = float(data.get('vat_rate', 0.19))  # Default 19%
+        
+        # Get VAT rate based on country and rate type
+        country_code = data.get('buyer_country', 'DE')
+        vat_rate_type = data.get('vat_rate_type', 'standard')
+        vat_rate = get_vat_rate(country_code, vat_rate_type)
         
         # Calculate VAT
         net_total = item_subtotal + shipping_total

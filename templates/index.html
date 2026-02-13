@@ -14,11 +14,6 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ request.url }}">
     
-    <!-- Google Search Console Verification -->
-    {% if google_verification %}
-    <meta name="google-site-verification" content="{{ google_verification }}" />
-    {% endif %}
-    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.url }}">
@@ -53,6 +48,7 @@
     </script>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/vat-rates.js') }}"></script>
 </head>
 <body>
     <div class="container">
@@ -108,20 +104,36 @@
                             <label for="buyer_country">Country *</label>
                             <select id="buyer_country" name="buyer_country" required>
                                 <option value="">Select Country</option>
-                                <option value="Germany">Germany</option>
-                                <option value="Austria">Austria</option>
-                                <option value="Switzerland">Switzerland</option>
-                                <option value="France">France</option>
-                                <option value="Italy">Italy</option>
-                                <option value="Spain">Spain</option>
-                                <option value="Netherlands">Netherlands</option>
-                                <option value="Belgium">Belgium</option>
-                                <option value="Poland">Poland</option>
-                                <option value="Sweden">Sweden</option>
-                                <option value="Denmark">Denmark</option>
-                                <option value="Norway">Norway</option>
-                                <option value="Finland">Finland</option>
-                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="AT">Austria</option>
+                                <option value="BE">Belgium</option>
+                                <option value="BG">Bulgaria</option>
+                                <option value="HR">Croatia</option>
+                                <option value="CY">Cyprus</option>
+                                <option value="CZ">Czech Republic</option>
+                                <option value="DK">Denmark</option>
+                                <option value="EE">Estonia</option>
+                                <option value="FI">Finland</option>
+                                <option value="FR">France</option>
+                                <option value="DE">Germany</option>
+                                <option value="GR">Greece</option>
+                                <option value="HU">Hungary</option>
+                                <option value="IE">Ireland</option>
+                                <option value="IT">Italy</option>
+                                <option value="LV">Latvia</option>
+                                <option value="LT">Lithuania</option>
+                                <option value="LU">Luxembourg</option>
+                                <option value="MT">Malta</option>
+                                <option value="NL">Netherlands</option>
+                                <option value="PL">Poland</option>
+                                <option value="PT">Portugal</option>
+                                <option value="RO">Romania</option>
+                                <option value="SK">Slovakia</option>
+                                <option value="SI">Slovenia</option>
+                                <option value="ES">Spain</option>
+                                <option value="SE">Sweden</option>
+                                <option value="CH">Switzerland</option>
+                                <option value="GB">United Kingdom</option>
+                                <option value="NO">Norway</option>
                             </select>
                         </div>
                     </div>
@@ -152,16 +164,14 @@
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="vat_rate">VAT Rate (%)</label>
-                            <select id="vat_rate" name="vat_rate">
-                                <option value="0.00">0% (No VAT)</option>
-                                <option value="0.07">7% (Reduced)</option>
-                                <option value="0.10">10%</option>
-                                <option value="0.19" selected>19% (Standard)</option>
-                                <option value="0.20">20%</option>
-                                <option value="0.21">21%</option>
-                                <option value="0.25">25%</option>
+                            <label for="vat_rate_type">VAT Rate Type</label>
+                            <select id="vat_rate_type" name="vat_rate_type">
+                                <option value="standard" selected>Standard Rate</option>
+                                <option value="reduced">Reduced Rate</option>
                             </select>
+                            <small id="vat_rate_display" style="display: block; margin-top: 8px; color: #86868B;">
+                                Select a country to see VAT rate
+                            </small>
                         </div>
 
                         <div class="form-group">

@@ -10,13 +10,6 @@ services:
         value: 3.9.6
       - key: PORT
         value: 10000
-      - key: FLASK_ENV
-        value: production
-      # Google Search Console Verification
-      # Get your code from: https://search.google.com/search-console
-      # Replace YOUR_VERIFICATION_CODE with the actual code from Google
-      - key: GOOGLE_VERIFICATION
-        value: YOUR_VERIFICATION_CODE_HERE
     disk:
       name: invoice-data
       mountPath: /opt/render/project/src/generated_invoices

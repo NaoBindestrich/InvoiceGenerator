@@ -6,7 +6,43 @@ let currentInvoiceFilename = '';
 // Initialize form with one item on page load
 document.addEventListener('DOMContentLoaded', function() {
     addItem(); // Add first item automatically
+    
+    // Add event listeners for VAT rate updates
+    const countrySelect = document.getElementById('buyer_country');
+    const vatTypeSelect = document.getElementById('vat_rate_type');
+    
+    if (countrySelect && vatTypeSelect) {
+        countrySelect.addEventListener('change', updateVATRateDisplay);
+        vatTypeSelect.addEventListener('change', updateVATRateDisplay);
+        
+        // Initial update if country is pre-selected
+        updateVATRateDisplay();
+    }
 });
+
+// Update VAT rate display based on country and rate type
+function updateVATRateDisplay() {
+    const countryCode = document.getElementById('buyer_country').value;
+    const rateType = document.getElementById('vat_rate_type').value;
+    const display = document.getElementById('vat_rate_display');
+    
+    if (!countryCode) {
+        display.textContent = 'Select a country to see VAT rate';
+        display.style.color = '#86868B';
+        return;
+    }
+    
+    try {
+        const rate = getVATRatePercentage(countryCode, rateType);
+        const countryName = getCountryName(countryCode);
+        display.textContent = `${countryName}: ${rate}% VAT`;
+        display.style.color = '#34C759'; // Success green
+    } catch (error) {
+        console.error('Error getting VAT rate:', error);
+        display.textContent = 'VAT rate not available';
+        display.style.color = '#FF3B30'; // Error red
+    }
+}
 
 // Add new item row
 function addItem() {
@@ -119,14 +155,17 @@ document.getElementById('invoiceForm').addEventListener('submit', async function
     
     try {
         // Collect form data
+        const countryCode = document.getElementById('buyer_country').value;
+        const vatRateType = document.getElementById('vat_rate_type').value;
+        
         const formData = {
             buyer_name: document.getElementById('buyer_name').value,
             buyer_street: document.getElementById('buyer_street').value,
             buyer_city: document.getElementById('buyer_city').value,
             buyer_postal: document.getElementById('buyer_postal').value,
-            buyer_country: document.getElementById('buyer_country').value,
+            buyer_country: countryCode,
             buyer_vat_id: document.getElementById('buyer_vat_id').value,
-            vat_rate: parseFloat(document.getElementById('vat_rate').value),
+            vat_rate_type: vatRateType,
             shipping_total: parseFloat(document.getElementById('shipping_total').value) || 0,
             currency: document.getElementById('currency').value,
             shipping_service: document.getElementById('shipping_service').value,
@@ -222,7 +261,18 @@ function calculateTotal() {
     });
     
     const shipping = parseFloat(document.getElementById('shipping_total').value) || 0;
-    const vatRate = parseFloat(document.getElementById('vat_rate').value) || 0;
+    const countryCode = document.getElementById('buyer_country').value;
+    const rateType = document.getElementById('vat_rate_type').value;
+    
+    // Get VAT rate from country
+    let vatRate = 0;
+    if (countryCode) {
+        try {
+            vatRate = getVATRate(countryCode, rateType);
+        } catch (e) {
+            vatRate = 0.19; // Fallback
+        }
+    }
     
     const total = (subtotal + shipping) * (1 + vatRate);
     
