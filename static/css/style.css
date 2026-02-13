@@ -37,7 +37,7 @@ body {
     min-height: 100vh;
 }
 
-/* Liquid Glass Animated Background */
+/* Liquid Glass Animated Background - True Fluid Simulation */
 body::before {
     content: '';
     position: fixed;
@@ -45,33 +45,25 @@ body::before {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(
-        45deg,
-        #667eea 0%,
-        #764ba2 15%,
-        #f093fb 30%,
-        #4facfe 45%,
-        #00f2fe 60%,
-        #43e97b 75%,
-        #38f9d7 90%,
-        #667eea 100%
-    );
-    background-size: 400% 400%;
-    animation: gradientShift 25s ease infinite;
-    opacity: 0.6;
+    background: 
+        radial-gradient(circle at 30% 30%, #667eea 0%, transparent 40%),
+        radial-gradient(circle at 70% 60%, #f093fb 0%, transparent 40%),
+        radial-gradient(circle at 40% 80%, #00f2fe 0%, transparent 40%);
+    animation: liquidFloat 20s ease-in-out infinite alternate;
+    opacity: 0.65;
     z-index: -1;
-    filter: blur(80px);
+    filter: blur(120px);
 }
 
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
+@keyframes liquidFloat {
+    0% { 
+        transform: translate(0, 0) scale(1);
     }
-    50% {
-        background-position: 100% 50%;
+    50% { 
+        transform: translate(-5%, 5%) scale(1.1);
     }
-    100% {
-        background-position: 0% 50%;
+    100% { 
+        transform: translate(5%, -5%) scale(1);
     }
 }
 
@@ -188,11 +180,11 @@ h1 {
     margin-bottom: 32px;
 }
 
-/* Card - Liquid Glass Effect */
+/* Card - True Liquid Glass with Refraction Distortion */
 .card {
     background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(18px) saturate(160%) url(#liquid-distortion);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
     border-radius: 24px;
     padding: 40px;
     margin-bottom: 24px;
@@ -224,17 +216,23 @@ h1 {
 .card:nth-child(3) { animation-delay: 0.3s; }
 .card:nth-child(4) { animation-delay: 0.4s; }
 
+/* Proper Specular Highlight - Realistic Glass Light Rolloff */
 .card::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    inset: 0;
+    border-radius: inherit;
     pointer-events: none;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.05) 60%,
+        transparent 100%
+    );
+    mix-blend-mode: overlay;
+    opacity: 0.6;
+    transition: opacity 0.4s ease;
 }
 
 .card:hover {
@@ -245,7 +243,19 @@ h1 {
 }
 
 .card:hover::before {
-    opacity: 1;
+    opacity: 0.75;
+}
+
+/* Inner Refraction Edge - Simulates Lens Thickness */
+.card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .card-title {
@@ -670,14 +680,15 @@ button:active::before,
     box-shadow: 0 8px 24px rgba(52, 199, 89, 0.3);
 }
 
+/* Tone down success pulse for subtlety */
 @keyframes successPulse {
     0%, 100% {
         transform: scale(1);
         box-shadow: 0 4px 20px rgba(52, 199, 89, 0.2);
     }
     50% {
-        transform: scale(1.05);
-        box-shadow: 0 8px 30px rgba(52, 199, 89, 0.3);
+        transform: scale(1.03);
+        box-shadow: 0 6px 24px rgba(52, 199, 89, 0.25);
     }
 }
 
@@ -761,34 +772,11 @@ textarea {
     transform-style: preserve-3d;
 }
 
-/* Subtle shimmer animation on glass surfaces */
-@keyframes glassShimmer {
-    0% {
-        background-position: -200% 0;
-    }
-    100% {
-        background-position: 200% 0;
-    }
-}
-
-.card::before {
-    background: linear-gradient(
-        120deg,
-        transparent 30%,
-        rgba(255, 255, 255, 0.3) 50%,
-        transparent 70%
-    );
-    background-size: 200% 100%;
-    animation: glassShimmer 8s ease-in-out infinite;
-}
-
-/* Enhanced depth layers */
-.card,
+/* Enhanced depth layers - Only for item-row */
 .item-row {
     position: relative;
 }
 
-.card::after,
 .item-row::after {
     content: '';
     position: absolute;
@@ -798,18 +786,18 @@ textarea {
     bottom: -1px;
     background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.3) 100%
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.15) 100%
     );
     border-radius: inherit;
-    opacity: 0.5;
+    opacity: 0.3;
     pointer-events: none;
     z-index: -1;
-    filter: blur(4px);
+    filter: blur(3px);
 }
 
-/* Frosted edge glow */
+/* Subtle Frosted edge glow - More refined */
 button,
 input:focus,
 select:focus,
@@ -828,28 +816,28 @@ textarea:focus::after {
     right: -2px;
     bottom: -2px;
     background: linear-gradient(45deg, 
-        rgba(0, 122, 255, 0.6),
-        rgba(88, 86, 214, 0.6),
-        rgba(255, 45, 85, 0.6),
-        rgba(0, 122, 255, 0.6)
+        rgba(0, 122, 255, 0.4),
+        rgba(88, 86, 214, 0.4),
+        rgba(255, 45, 85, 0.4),
+        rgba(0, 122, 255, 0.4)
     );
     background-size: 300% 300%;
     border-radius: inherit;
     opacity: 0;
     z-index: -1;
-    filter: blur(8px);
+    filter: blur(6px);
     transition: opacity 0.3s ease;
-    animation: glowPulse 4s ease infinite;
+    animation: glowPulse 6s ease infinite;
 }
 
 button:hover::after {
-    opacity: 0.6;
+    opacity: 0.3;
 }
 
 input:focus::after,
 select:focus::after,
 textarea:focus::after {
-    opacity: 0.4;
+    opacity: 0.25;
 }
 
 @keyframes glowPulse {
@@ -902,27 +890,24 @@ textarea:focus::after {
         radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
 }
 
-/* Liquid morphing on hover */
+/* Subtle Liquid morphing on hover - More Apple-like */
 .card:hover {
-    animation: liquidMorph 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: liquidMorph 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes liquidMorph {
     0%, 100% {
         border-radius: 24px;
     }
-    25% {
-        border-radius: 28px 20px 24px 20px;
+    33% {
+        border-radius: 26px 22px 24px 22px;
     }
-    50% {
-        border-radius: 20px 28px 20px 24px;
-    }
-    75% {
-        border-radius: 24px 24px 28px 20px;
+    66% {
+        border-radius: 22px 26px 22px 24px;
     }
 }
 
-/* Enhanced input glass with micro-animations */
+/* Subtle input micro-animation - More Apple-like */
 input:hover,
 select:hover,
 textarea:hover {
@@ -931,16 +916,16 @@ textarea:hover {
 
 @keyframes inputPulse {
     0%, 100% {
-        transform: translateY(-2px) scale(1);
+        transform: translateY(-1px);
     }
     50% {
-        transform: translateY(-3px) scale(1.002);
+        transform: translateY(-2px);
     }
 }
 
-/* Chromatic aberration effect on buttons */
+/* Subtle Chromatic aberration effect on buttons - More refined */
 button:active {
-    animation: chromaticPress 0.2s ease;
+    animation: chromaticPress 0.15s ease;
 }
 
 @keyframes chromaticPress {
@@ -949,8 +934,8 @@ button:active {
     }
     50% {
         filter: 
-            drop-shadow(2px 0 0 rgba(255, 0, 255, 0.3))
-            drop-shadow(-2px 0 0 rgba(0, 255, 255, 0.3));
+            drop-shadow(1px 0 0 rgba(255, 0, 255, 0.15))
+            drop-shadow(-1px 0 0 rgba(0, 255, 255, 0.15));
     }
 }
 
@@ -972,7 +957,7 @@ button:active {
     -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
-/* Responsive glass intensity */
+/* Performance Optimization - Remove Excessive will-change */
 @media (prefers-reduced-motion: reduce) {
     .card::before,
     button::before,
@@ -980,14 +965,19 @@ button:active {
         animation: none;
     }
     
-    .card,
-    .item-row,
-    button,
-    input,
-    select,
-    textarea {
-        will-change: auto;
+    * {
+        will-change: auto !important;
     }
+}
+
+/* Apply will-change only to actively animating elements */
+.card:hover,
+.item-row:hover {
+    will-change: transform;
+}
+
+button:active {
+    will-change: transform;
 }
 
 /* High performance mode - reduce blur on lower-end devices */
