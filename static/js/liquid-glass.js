@@ -54,6 +54,11 @@ class LiquidGlass {
         element.setAttribute('data-liquid-glass', 'true');
         this.elements.push(element);
 
+        // Remove animation after it completes (prevent retriggering)
+        element.addEventListener('animationend', () => {
+            element.style.animation = 'none';
+        }, { once: true });
+
         // Add mouse move listener for parallax
         element.addEventListener('mousemove', (e) => {
             this.applyParallax(element, e);
@@ -114,8 +119,9 @@ class LiquidGlass {
     }
 
     resetParallax(element) {
-        element.style.transform = 'translateY(0) scale(1) perspective(1000px) rotateX(0deg) rotateY(0deg)';
-        element.style.transition = 'transform 0.3s ease';
+        // Remove inline transform to let CSS take over
+        element.style.transform = '';
+        element.style.transition = '';
         this.removeElementLight(element);
     }
 

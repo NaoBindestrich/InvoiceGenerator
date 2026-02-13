@@ -199,9 +199,10 @@ h1 {
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
                 0 0 0 1px rgba(255, 255, 255, 0.18) inset;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateY(0);
-    animation: cardFadeIn 0.6s ease backwards;
+    animation: cardFadeIn 0.6s ease forwards;
     position: relative;
     overflow: hidden;
 }
@@ -358,10 +359,12 @@ textarea::placeholder {
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(31, 38, 135, 0.2);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateX(0);
     opacity: 1;
-    animation: slideIn 0.4s ease;
+    animation: slideIn 0.4s ease forwards;
 }
 
 @keyframes slideIn {
