@@ -36,12 +36,12 @@ python app.py
 
 ## 📖 Documentation
 
-- **[guides/DEPLOY.md](guides/DEPLOY.md)** - 5-minute Render.com deployment guide
-- **[guides/HOSTING_GUIDE.md](guides/HOSTING_GUIDE.md)** - All hosting platforms compared
-- **[SEO_GUIDE.md](SEO_GUIDE.md)** - Complete SEO & Google visibility strategy
-- **[SEO_CHECKLIST.md](SEO_CHECKLIST.md)** - Quick SEO implementation checklist
-- **[guides/EN16931_COMPLIANCE.md](guides/EN16931_COMPLIANCE.md)** - EU eInvoicing standard guide
-- **[guides/SETUP_GUIDE.md](guides/SETUP_GUIDE.md)** - Detailed setup walkthrough
+- **[docs/DEPLOY.md](docs/DEPLOY.md)** - 5-minute Render.com deployment guide
+- **[docs/HOSTING_GUIDE.md](docs/HOSTING_GUIDE.md)** - All hosting platforms compared
+- **[docs/SEO_GUIDE.md](docs/SEO_GUIDE.md)** - Complete SEO & Google visibility strategy
+- **[docs/SEO_CHECKLIST.md](docs/SEO_CHECKLIST.md)** - Quick SEO implementation checklist
+- **[docs/EN16931_COMPLIANCE.md](docs/EN16931_COMPLIANCE.md)** - EU eInvoicing standard guide
+- **[docs/SETUP_GUIDE.md](docs/SETUP_GUIDE.md)** - Detailed setup walkthrough
 
 ## 🎯 Use Cases
 
@@ -53,11 +53,44 @@ python app.py
 ## 📁 Project Structure
 
 ```
-├── app.py                      # Flask web server
-├── invoice_generator_web.py    # PDF generation
-├── static/                     # CSS & JavaScript
-├── templates/                  # HTML pages
-└── generated_invoices/         # Output folder
+├── app.py                      # Main Flask application
+├── invoice_generator.py        # Original CLI tool
+├── invoice_generator_web.py    # PDF generation module
+├── requirements.txt            # Python dependencies
+├── Procfile                    # Deployment configuration
+├── render.yaml                 # Render.com config
+├── runtime.txt                 # Python version
+│
+├── static/                     # Frontend assets
+│   ├── css/                    # Stylesheets (Liquid Glass design)
+│   ├── js/                     # JavaScript (app.js, liquid-glass.js, vat-rates.js)
+│   └── images/                 # Images & icons
+│
+├── templates/                  # HTML templates
+│   ├── index.html              # Main invoice form
+│   └── settings.html           # Company settings page
+│docs/SETUP_GUIDE.md](docs/
+├── generated_invoices/         # PDF output folder
+├── company_config.json         # Your company info (gitignored)
+│
+├── docs/                       # 📚 Documentation
+│   ├── DEPLOY.md               # Deployment guide
+│   ├── HOSTING_GUIDE.md        # Platform comparison
+│   ├── SEO_GUIDE.md            # SEO strategy
+│   ├── SEO_CHECKLIST.md        # SEO tasks
+│   ├── EN16931_COMPLIANCE.md   # EU standard info
+│   ├── SETUP_GUIDE.md          # Setup walkthrough
+│   └── QUICKSTART.md           # Quick reference
+│
+├── scripts/                    # 🛠️ Utility scripts
+│   ├── deploy_setup.sh         # Deployment validator
+│   ├── submit_to_search_engines.sh  # SEO submission
+│   ├── create_og_image.py      # Social media image generator
+│   └── start.sh                # App launcher
+│
+└── config/                     # ⚙️ Configuration templates
+    ├── .env.template           # Environment variables
+    └── company_config.template.json  # Company info template
 ```
 
 ## 🌐 Next Steps
