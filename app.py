@@ -14,6 +14,7 @@ from invoice_generator_web import (
     PDFInvoiceGenerator,
     COMPANY_INFO
 )
+from invoice_generator_web_en import PDFInvoiceGenerator as PDFInvoiceGeneratorEN
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
@@ -296,10 +297,14 @@ def generate_invoice():
             payment_reference=data.get('payment_reference', order_id)
         )
         
-        # Generate PDF with current company settings
+        # Generate PDF with current company settings and selected language
         company_settings = load_company_settings()
         language = data.get('language', 'de')  # Default to German
-        generator = PDFInvoiceGenerator(company_info=company_settings, language=language)
+        
+        if language == 'en':
+            generator = PDFInvoiceGeneratorEN(company_info=company_settings)
+        else:
+            generator = PDFInvoiceGenerator(company_info=company_settings)
         
         # Create filename
         day = datetime.now().strftime("%d")

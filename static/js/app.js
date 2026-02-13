@@ -157,7 +157,6 @@ document.getElementById('invoiceForm').addEventListener('submit', async function
         // Collect form data
         const countryCode = document.getElementById('buyer_country').value;
         const vatRateType = document.getElementById('vat_rate_type').value;
-        const language = document.getElementById('language').value; // Get selected language
         
         const formData = {
             buyer_name: document.getElementById('buyer_name').value,
@@ -167,7 +166,6 @@ document.getElementById('invoiceForm').addEventListener('submit', async function
             buyer_country: countryCode,
             buyer_vat_id: document.getElementById('buyer_vat_id').value,
             vat_rate_type: vatRateType,
-            language: language, // Add language to form data
             shipping_total: parseFloat(document.getElementById('shipping_total').value) || 0,
             currency: document.getElementById('currency').value,
             shipping_service: document.getElementById('shipping_service').value,

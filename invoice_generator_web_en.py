@@ -1,5 +1,5 @@
 """
-Simplified Invoice Generator for Web Application
+Simplified Invoice Generator for Web Application - ENGLISH VERSION
 Contains only PDF generation logic (no web scraping)
 """
 
@@ -99,48 +99,10 @@ class PDFInvoiceGenerator:
         """Convert Top-Left user coordinate to Bottom-Left PDF coordinate"""
         return self.PAGE_HEIGHT - user_y - height
 
-    def _translate_country_to_german(self, country: str) -> str:
-        """Translate English country names to German for invoice display"""
-        translations = {
-            "Germany": "Deutschland",
-            "Austria": "Österreich",
-            "Switzerland": "Schweiz",
-            "France": "Frankreich",
-            "Italy": "Italien",
-            "Spain": "Spanien",
-            "Netherlands": "Niederlande",
-            "Belgium": "Belgien",
-            "Luxembourg": "Luxemburg",
-            "Poland": "Polen",
-            "Czech Republic": "Tschechien",
-            "Czechia": "Tschechien",
-            "Hungary": "Ungarn",
-            "Romania": "Rumänien",
-            "Bulgaria": "Bulgarien",
-            "Slovakia": "Slowakei",
-            "Slovenia": "Slowenien",
-            "Croatia": "Kroatien",
-            "Lithuania": "Litauen",
-            "Latvia": "Lettland",
-            "Estonia": "Estland",
-            "Greece": "Griechenland",
-            "Portugal": "Portugal",
-            "Ireland": "Irland",
-            "Denmark": "Dänemark",
-            "Sweden": "Schweden",
-            "Finland": "Finnland",
-            "Norway": "Norwegen",
-            "Iceland": "Island",
-            "United Kingdom": "Vereinigtes Königreich",
-            "Great Britain": "Großbritannien",
-            "England": "England",
-            "Scotland": "Schottland",
-            "Wales": "Wales",
-            "Northern Ireland": "Nordirland",
-            "Cyprus": "Zypern",
-            "Malta": "Malta",
-        }
-        return translations.get(country, country)
+    def _translate_country_to_english(self, country: str) -> str:
+        """Keep English country names as-is for invoice display"""
+        # Return country as-is for English invoices
+        return country
 
     def _format_price(self, amount: float, currency: str = "€") -> str:
         """Format price with proper decimal separator and currency"""
@@ -193,7 +155,7 @@ class PDFInvoiceGenerator:
             addr_start_y = 91.75
             
             c.setFont(self.FONT_NORMAL, 7)
-            c.drawString(57.58, self._to_pdf_y(addr_start_y), "Lieferadresse:")
+            c.drawString(57.58, self._to_pdf_y(addr_start_y), "Delivery Address:")
             
             c.setFont(self.FONT_NORMAL, 10)
             text_obj = c.beginText(57.58, self._to_pdf_y(addr_start_y + 12))
@@ -202,8 +164,8 @@ class PDFInvoiceGenerator:
                 for street_line in invoice_data.buyer_street.split('\n'):
                     text_obj.textLine(street_line)
             text_obj.textLine(f"{invoice_data.buyer_postal} {invoice_data.buyer_city}")
-            country_german = self._translate_country_to_german(invoice_data.buyer_country)
-            text_obj.textLine(country_german.upper())
+            country_english = self._translate_country_to_english(invoice_data.buyer_country)
+            text_obj.textLine(country_english.upper())
             c.drawText(text_obj)
             
             # --- Sender Line ---
@@ -211,7 +173,7 @@ class PDFInvoiceGenerator:
             sender_y_pdf = self._to_pdf_y(sender_y_user) - 6
             
             c.setFont(self.FONT_NORMAL, 6)
-            c.drawString(56.16, sender_y_pdf, f"Abs.: {self.company_info['address_line']}")
+            c.drawString(56.16, sender_y_pdf, f"From: {self.company_info['address_line']}")
             
             line_y_user = 180.345
             line_y_pdf = self._to_pdf_y(line_y_user)
@@ -235,9 +197,9 @@ class PDFInvoiceGenerator:
                 for street_line in invoice_data.buyer_street.split('\n'):
                     text_obj.textLine(street_line)
             text_obj.textLine(f"{invoice_data.buyer_postal} {invoice_data.buyer_city}")
-            text_obj.textLine(country_german.upper())
+            text_obj.textLine(country_english.upper())
             if invoice_data.buyer_vat_id:
-                text_obj.textLine(f"USt-IdNr: {invoice_data.buyer_vat_id}")
+                text_obj.textLine(f"VAT ID: {invoice_data.buyer_vat_id}")
             c.drawText(text_obj)
             
             # --- Title & Meta Section ---
@@ -251,7 +213,7 @@ class PDFInvoiceGenerator:
             title_y = max(title_y_base, required_title_y)
             
             c.setFont(self.FONT_BOLD, 18)
-            c.drawString(57.58, self._to_pdf_y(title_y) - 14, "Rechnung")
+            c.drawString(57.58, self._to_pdf_y(title_y) - 14, "INVOICE")
             
             layout_shift = title_y - 243.63
             if layout_shift < 0:
@@ -264,27 +226,27 @@ class PDFInvoiceGenerator:
             c.setFont(self.FONT_NORMAL, 9)
             
             y1 = self._to_pdf_y(title_y + 29.007)
-            c.drawString(label_x, y1, "Rechnung")
+            c.drawString(label_x, y1, "Invoice")
             c.drawString(value_x, y1, invoice_data.order_id)
             
             y2 = self._to_pdf_y(title_y + 40.346)
-            c.drawString(label_x, y2, "Rechnungsdatum")
+            c.drawString(label_x, y2, "Invoice Date")
             c.drawString(value_x, y2, invoice_date)
             
             y3 = self._to_pdf_y(title_y + 51.836)
-            c.drawString(label_x, y3, "Bestelldatum")
+            c.drawString(label_x, y3, "Order Date")
             c.drawString(value_x, y3, invoice_data.purchase_date)
             
             y4 = self._to_pdf_y(title_y + 62.966)
-            c.drawString(label_x, y4, "Fälligkeitsdatum")
+            c.drawString(label_x, y4, "Due Date")
             c.drawString(value_x, y4, invoice_data.due_date)
             
             y5 = self._to_pdf_y(title_y + 74.817)
-            c.drawString(label_x, y5, "Zahlart")
+            c.drawString(label_x, y5, "Payment Method")
             c.drawString(value_x, y5, invoice_data.payment_means or invoice_data.sales_channel)
             
             y_ord = self._to_pdf_y(365.0 + layout_shift)
-            c.drawString(56.16, y_ord, f"Bestellnummer: {invoice_data.order_id}")
+            c.drawString(56.16, y_ord, f"Order Number: {invoice_data.order_id}")
             
             # --- Items Table ---
             header_rect_y_user = 376.106 + layout_shift
@@ -305,16 +267,16 @@ class PDFInvoiceGenerator:
             header_text_y = self._to_pdf_y(379.90 + layout_shift) - 7
             
             cols = [
-                (65.57, "Pos"),
-                (93.01, "Nummer"),
-                (175.22, "Artikel"),
-                (398.06, "Anzahl"),
-                (467.36, "Preis"),
-                (508.70, "Summe")
+                (65.57, "No"),
+                (93.01, "Number"),
+                (175.22, "Item"),
+                (398.06, "Qty"),
+                (467.36, "Price"),
+                (508.70, "Total")
             ]
             
             for i, (x, title) in enumerate(cols):
-                if title in ["Anzahl", "Preis", "Summe"]:
+                if title in ["Qty", "Price", "Total"]:
                     c.drawRightString(x + 40, header_text_y, title)
                 else:
                     c.drawString(x, header_text_y, title)
@@ -370,29 +332,28 @@ class PDFInvoiceGenerator:
             total_net = item_net + shipping_net
             
             if has_promotion:
-                draw_total_row_fixed(425.33, "Zwischensumme (netto)", self._format_price(item_net_before_discount, invoice_data.currency))
-                draw_total_row_fixed(439.65, "Rabatt", "-" + self._format_price(discount_net, invoice_data.currency))
-                draw_total_row_fixed(453.95, "Versand", self._format_price(invoice_data.shipping_total, invoice_data.currency))
-                draw_total_row_fixed(468.12, "Gesamt netto", self._format_price(total_net, invoice_data.currency))
-                draw_total_row_fixed(482.29, f"Umsatzsteuer ({vat_percent})", self._format_price(invoice_data.vat_amount, invoice_data.currency))
-                draw_total_row_fixed(501.97, "Gesamtsumme", self._format_price(invoice_data.grand_total, invoice_data.currency), bold=True)
+                draw_total_row_fixed(425.33, "Subtotal (net)", self._format_price(item_net_before_discount, invoice_data.currency))
+                draw_total_row_fixed(439.65, "Discount", "-" + self._format_price(discount_net, invoice_data.currency))
+                draw_total_row_fixed(453.95, "Shipping", self._format_price(invoice_data.shipping_total, invoice_data.currency))
+                draw_total_row_fixed(468.12, "Total (net)", self._format_price(total_net, invoice_data.currency))
+                draw_total_row_fixed(482.29, f"VAT ({vat_percent})", self._format_price(invoice_data.vat_amount, invoice_data.currency))
+                draw_total_row_fixed(501.97, "Grand Total", self._format_price(invoice_data.grand_total, invoice_data.currency), bold=True)
             else:
-                draw_total_row_fixed(425.33, "Zwischensumme (netto)", self._format_price(item_net, invoice_data.currency))
-                draw_total_row_fixed(439.65, "Versand", self._format_price(invoice_data.shipping_total, invoice_data.currency))
-                draw_total_row_fixed(453.95, "Gesamt netto", self._format_price(total_net, invoice_data.currency))
-                draw_total_row_fixed(468.12, f"Umsatzsteuer ({vat_percent})", self._format_price(invoice_data.vat_amount, invoice_data.currency))
-                draw_total_row_fixed(487.97, "Gesamtsumme", self._format_price(invoice_data.grand_total, invoice_data.currency), bold=True)
+                draw_total_row_fixed(425.33, "Subtotal (net)", self._format_price(item_net, invoice_data.currency))
+                draw_total_row_fixed(439.65, "Shipping", self._format_price(invoice_data.shipping_total, invoice_data.currency))
+                draw_total_row_fixed(453.95, "Total (net)", self._format_price(total_net, invoice_data.currency))
+                draw_total_row_fixed(468.12, f"VAT ({vat_percent})", self._format_price(invoice_data.vat_amount, invoice_data.currency))
+                draw_total_row_fixed(487.97, "Grand Total", self._format_price(invoice_data.grand_total, invoice_data.currency), bold=True)
             
             # --- Thank You Message ---
             ty_y = self._to_pdf_y(542.24 + layout_shift + item_count_shift) - 8
             c.setFont(self.FONT_NORMAL, 8)
-            c.drawString(57.58, ty_y, "Vielen Dank für Ihre Bestellung!")
-            c.drawString(57.58, ty_y - 12, "Thank you for your order!")
+            c.drawString(57.58, ty_y, "Thank you for your order!")
             
             # --- SKU Reference ---
             sku_section_y = ty_y - 36
             c.setFont(self.FONT_BOLD, 8)
-            c.drawString(57.58, sku_section_y, "Artikelnummern (SKU):")
+            c.drawString(57.58, sku_section_y, "Item Numbers (SKU):")
             
             c.setFont(self.FONT_NORMAL, 8)
             current_sku_y = sku_section_y - 12
@@ -408,14 +369,14 @@ class PDFInvoiceGenerator:
             text_obj.setFont(self.FONT_NORMAL, 8)
             text_obj.setLeading(10)
             text_obj.textLine(self.company_info["control"])
-            text_obj.textLine(f"Bankverbindung: {self.company_info['bank']}")
+            text_obj.textLine(f"Bank Details: {self.company_info['bank']}")
             text_obj.textLine(f"IBAN: {self.company_info['iban']}")
             if self.company_info.get('bic'):
                 text_obj.textLine(f"BIC: {self.company_info['bic']}")
             if invoice_data.payment_terms:
-                text_obj.textLine(f"Zahlungsbedingungen: {invoice_data.payment_terms}")
+                text_obj.textLine(f"Payment Terms: {invoice_data.payment_terms}")
             if invoice_data.payment_reference:
-                text_obj.textLine(f"Verwendungszweck: {invoice_data.payment_reference}")
+                text_obj.textLine(f"Payment Reference: {invoice_data.payment_reference}")
             c.drawText(text_obj)
             
             text_obj = c.beginText(304.56, footer_y)
@@ -424,11 +385,11 @@ class PDFInvoiceGenerator:
             text_obj.textLine(self.company_info["court"])
             text_obj.textLine(f"UID: {self.company_info['uid']}")
             if self.company_info.get('vat_id'):
-                text_obj.textLine(f"USt-IdNr: {self.company_info['vat_id']}")
+                text_obj.textLine(f"VAT ID: {self.company_info['vat_id']}")
             if self.company_info.get('company_registration'):
-                text_obj.textLine(f"Registrierung: {self.company_info['company_registration']}")
+                text_obj.textLine(f"Registration: {self.company_info['company_registration']}")
             if self.company_info.get('ceo'):
-                text_obj.textLine(f"Geschäftsführung: {self.company_info['ceo']}")
+                text_obj.textLine(f"Management: {self.company_info['ceo']}")
             c.drawText(text_obj)
             
             # Copyright notice at bottom
