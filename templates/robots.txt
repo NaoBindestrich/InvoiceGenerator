@@ -5,7 +5,7 @@ Disallow: /api/
 Disallow: /download/
 
 # Sitemap
-Sitemap: {{ request.url_root }}sitemap.xml
+Sitemap: https://invoicegenerator-xm3l.onrender.com/sitemap.xml
 
-# Crawl-delay
+# pCrawl-delay
 Crawl-delay: 1
