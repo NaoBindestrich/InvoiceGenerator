@@ -3,20 +3,9 @@ Invoice Generator Web Application
 A simple Flask app for generating professional invoices
 """
 
-from flask import Flask, Response, url_for
+from flask import Flask, Response, url_for, render_template, jsonify, request, send_file
 
 app = Flask(__name__)
-
-@app.route("/sitemap.xml", methods=["GET"])
-def sitemap():
-    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-   <url>
-      <loc>https://invoicegenerator-xm3l.onrender.com/</loc>
-      <lastmod>2026-02-01</lastmod>
-   </url>
-</urlset>"""
-    return Response(xml, mimetype="application/xml")
 
 from pathlib import Path
 import json
