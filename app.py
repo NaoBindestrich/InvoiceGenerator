@@ -5,6 +5,8 @@ A simple Flask app for generating professional invoices
 
 from flask import Response, url_for
 
+app = Flask(__name__)
+
 @app.route("/sitemap.xml", methods=["GET"])
 def sitemap():
     xml = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -15,6 +17,7 @@ def sitemap():
    </url>
 </urlset>"""
     return Response(xml, mimetype="application/xml")
+
 from pathlib import Path
 import json
 from datetime import datetime, timedelta
@@ -27,7 +30,6 @@ from invoice_generator_web import (
 )
 from invoice_generator_web_en import PDFInvoiceGenerator as PDFInvoiceGeneratorEN
 
-app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
 # Ensure directories exist
