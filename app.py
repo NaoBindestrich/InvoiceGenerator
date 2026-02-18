@@ -3,7 +3,7 @@ Invoice Generator Web Application
 A simple Flask app for generating professional invoices
 """
 
-from flask import Response, url_for
+from flask import Flask, Response, url_for
 
 app = Flask(__name__)
 
