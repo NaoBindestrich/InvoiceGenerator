@@ -59,9 +59,10 @@
                     <h1>Manual Invoice Generator</h1>
                     <p class="subtitle">Create professional invoices in seconds</p>
                 </div>
-                <div style="display: flex; gap: 12px;">
+                <div style="display: flex; gap: 12px; align-items: center;">
                     <a href="/" class="btn btn-secondary">← Home</a>
                     <a href="/settings" class="btn btn-secondary">⚙️ Company Info</a>
+                    <button type="button" class="btn btn-secondary" onclick="if(confirm('Clear all saved form data?')) { clearSavedData(); location.reload(); }" style="font-size: 14px; padding: 8px 12px;">🗑️ Clear</button>
                 </div>
             </div>
         </header>
@@ -258,14 +259,21 @@
         <div id="downloadSection" class="card download-section">
             <div class="success-icon">✓</div>
             <h2 class="download-title">Invoice Generated!</h2>
-            <p class="download-subtitle">Your invoice is ready to download</p>
+            <p class="download-subtitle">Your invoice is ready to view and download</p>
+            
+            <!-- PDF Preview -->
+            <div id="previewContainer" style="margin: 24px 0; border-radius: 12px; overflow: hidden; background: #f5f5f5;">
+                <iframe id="pdfViewer" 
+                        style="width: 100%; height: 600px; border: none;" 
+                        title="Invoice Preview"></iframe>
+            </div>
             
             <div class="button-group">
                 <button class="btn btn-primary" onclick="downloadInvoice()">
-                    Download PDF
+                    ↓ Download PDF
                 </button>
                 <button class="btn btn-secondary" onclick="createAnother()">
-                    Create Another Invoice
+                    + Create Another Invoice
                 </button>
             </div>
         </div>

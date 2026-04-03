@@ -3,9 +3,105 @@
 let itemCount = 0;
 let currentInvoiceFilename = '';
 
+// Persistent Storage Keys
+const STORAGE_KEY = 'invoiceFormData';
+const ITEMS_KEY = 'invoiceItems';
+
+// Save form data to localStorage
+function saveFormData() {
+    const formData = {
+        buyer_name: document.getElementById('buyer_name').value,
+        buyer_street: document.getElementById('buyer_street').value,
+        buyer_city: document.getElementById('buyer_city').value,
+        buyer_postal: document.getElementById('buyer_postal').value,
+        buyer_country: document.getElementById('buyer_country').value,
+        buyer_vat_id: document.getElementById('buyer_vat_id').value,
+        vat_rate_type: document.getElementById('vat_rate_type').value,
+        shipping_total: document.getElementById('shipping_total').value,
+        currency: document.getElementById('currency').value,
+        shipping_service: document.getElementById('shipping_service').value,
+        payment_terms: document.getElementById('payment_terms').value,
+        payment_means: document.getElementById('payment_means').value,
+        payment_reference: document.getElementById('payment_reference').value,
+        language: document.getElementById('language').value,
+    };
+    
+    // Collect items data
+    const items = [];
+    const itemRows = document.querySelectorAll('.item-row');
+    itemRows.forEach((row) => {
+        const itemId = row.id.split('-')[1];
+        const item = {
+            product_name: document.getElementById(`product_name_${itemId}`).value,
+            sku: document.getElementById(`sku_${itemId}`).value,
+            quantity: document.getElementById(`quantity_${itemId}`).value,
+            unit_code: document.getElementById(`unit_code_${itemId}`).value,
+            unit_price: document.getElementById(`unit_price_${itemId}`).value,
+        };
+        items.push(item);
+    });
+    
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+    localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+}
+
+// Restore form data from localStorage
+function restoreFormData() {
+    const savedFormData = localStorage.getItem(STORAGE_KEY);
+    const savedItems = localStorage.getItem(ITEMS_KEY);
+    
+    if (savedFormData) {
+        const formData = JSON.parse(savedFormData);
+        
+        // Restore form fields
+        const fields = ['buyer_name', 'buyer_street', 'buyer_city', 'buyer_postal', 'buyer_country', 
+                       'buyer_vat_id', 'vat_rate_type', 'shipping_total', 'currency', 
+                       'shipping_service', 'payment_terms', 'payment_means', 'payment_reference', 'language'];
+        
+        fields.forEach(field => {
+            const element = document.getElementById(field);
+            if (element && formData[field] !== undefined) {
+                element.value = formData[field];
+            }
+        });
+    }
+    
+    // Restore items if available
+    if (savedItems) {
+        const items = JSON.parse(savedItems);
+        const container = document.getElementById('itemsContainer');
+        
+        // Clear default items
+        container.innerHTML = '';
+        itemCount = 0;
+        
+        // Restore each item
+        items.forEach(item => {
+            addItem();
+            const lastItemId = itemCount;
+            
+            document.getElementById(`product_name_${lastItemId}`).value = item.product_name || '';
+            document.getElementById(`sku_${lastItemId}`).value = item.sku || '';
+            document.getElementById(`quantity_${lastItemId}`).value = item.quantity || '1';
+            document.getElementById(`unit_code_${lastItemId}`).value = item.unit_code || 'C62';
+            document.getElementById(`unit_price_${lastItemId}`).value = item.unit_price || '';
+        });
+    } else {
+        // Add first item if no saved items
+        addItem();
+    }
+}
+
+// Clear all saved data
+function clearSavedData() {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(ITEMS_KEY);
+}
+
 // Initialize form with one item on page load
 document.addEventListener('DOMContentLoaded', function() {
-    addItem(); // Add first item automatically
+    // Restore previous form data
+    restoreFormData();
     
     // Add event listeners for VAT rate updates
     const countrySelect = document.getElementById('buyer_country');
@@ -17,6 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initial update if country is pre-selected
         updateVATRateDisplay();
+    }
+    
+    // Setup auto-save for all form inputs
+    const invoiceForm = document.getElementById('invoiceForm');
+    if (invoiceForm) {
+        invoiceForm.addEventListener('input', saveFormData);
+        invoiceForm.addEventListener('change', saveFormData);
     }
 });
 
@@ -154,6 +257,9 @@ document.getElementById('invoiceForm').addEventListener('submit', async function
     submitButton.textContent = 'Generating...';
     
     try {
+        // Save form data before submission
+        saveFormData();
+        
         // Collect form data
         const countryCode = document.getElementById('buyer_country').value;
         const vatRateType = document.getElementById('vat_rate_type').value;
@@ -210,12 +316,23 @@ document.getElementById('invoiceForm').addEventListener('submit', async function
             throw new Error(result.error || 'Failed to generate invoice');
         }
         
-        // Success! Show download section
+        // Success! Show download section with preview
         currentInvoiceFilename = result.filename;
         document.getElementById('formSection').style.display = 'none';
         document.getElementById('downloadSection').classList.add('show');
         
+        // Load PDF preview
+        const pdfViewer = document.getElementById('pdfViewer');
+        if (pdfViewer) {
+            pdfViewer.src = `/preview/${result.filename}`;
+        }
+        
         showAlert('Invoice generated successfully!', 'success');
+        
+        // Scroll to the preview
+        setTimeout(() => {
+            document.getElementById('downloadSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
         
     } catch (error) {
         console.error('Error:', error);
@@ -235,15 +352,13 @@ function downloadInvoice() {
 
 // Create another invoice
 function createAnother() {
-    // Reset form
+    // Reset form but keep saved data
     document.getElementById('invoiceForm').reset();
     document.getElementById('formSection').style.display = 'block';
     document.getElementById('downloadSection').classList.remove('show');
     
-    // Clear items and add one fresh item
-    document.getElementById('itemsContainer').innerHTML = '';
-    itemCount = 0;
-    addItem();
+    // Restore form data from localStorage
+    restoreFormData();
     
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
