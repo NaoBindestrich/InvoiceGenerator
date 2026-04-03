@@ -383,6 +383,25 @@ def privacy():
     return render_template('privacy.html')
 
 
+@app.before_request
+def before_request():
+    """Ensure URLs work with and without trailing slashes"""
+    if request.path != '/' and request.path.endswith('/'):
+        return redirect(request.path[:-1])
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """Custom 404 handler"""
+    return jsonify({'error': 'Page not found'}), 404
+
+
+@app.errorhandler(500)
+def server_error(e):
+    """Custom 500 handler"""
+    return jsonify({'error': 'Server error'}), 500
+
+
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5001))
