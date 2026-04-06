@@ -3,7 +3,7 @@ Invoice Generator Web Application
 A simple Flask app for generating professional invoices
 """
 
-from flask import Flask, Response, url_for, render_template, jsonify, request, send_file
+from flask import Flask, Response, url_for, render_template, jsonify, request, send_file, redirect
 
 app = Flask(__name__)
 
@@ -83,7 +83,7 @@ def get_vat_rate(country_code: str, rate_type: str = 'standard') -> float:
         print(f"Warning: VAT rate not found for country: {country_code}, using default 19%")
         return 0.19  # Default fallback
     
-    return country.get('reduced' if rate_type == 'reduced' else 'standard', 0.19)
+    return float(country.get('reduced' if rate_type == 'reduced' else 'standard', 0.19))
 
 
 def load_company_settings():
@@ -164,6 +164,10 @@ def sitemap():
     last_modified = datetime.now().strftime('%Y-%m-%d')
     return render_template('sitemap.xml', last_modified=last_modified), 200, {'Content-Type': 'application/xml'}
 
+@app.route('/googleef62eddc6703ce65.html')
+def google_verification():
+    """Serve Google verification file"""
+    return send_file('googleef62eddc6703ce65.html')
 
 @app.route('/api/company-settings', methods=['GET'])
 def get_company_settings():
@@ -258,7 +262,9 @@ def generate_invoice():
         vat_amount = gross_total - net_total
         
         # Generate order ID
-        order_id = f"INV-{datetime.now().strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
+        uuid_str = str(uuid.uuid4())
+        hex_part = uuid_str.split('-')[0].upper()
+        order_id = f"INV-{datetime.now().strftime('%Y%m%d')}-{hex_part}"
         
         # Get payment terms and calculate due date
         payment_terms = data.get('payment_terms', 'Net 30')
