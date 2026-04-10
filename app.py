@@ -358,6 +358,11 @@ def download_invoice(filename):
 def preview_invoice(filename):
     """Preview invoice PDF in browser"""
     try:
+        if filename == 'sample_invoice.pdf':
+            static_sample = Path("static") / "sample_invoice.pdf"
+            if static_sample.exists():
+                return send_file(static_sample, mimetype='application/pdf')
+
         file_path = INVOICE_DIR / filename
         
         if not file_path.exists():
@@ -381,6 +386,12 @@ def terms():
 def privacy():
     """Privacy Policy page"""
     return render_template('privacy.html')
+
+
+@app.route('/favicon.ico')
+def favicon():
+    """Handle missing favicon requests gracefully"""
+    return '', 204
 
 
 @app.before_request
